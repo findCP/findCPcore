@@ -1,6 +1,6 @@
-from AbstractMetabolicModel import AbstractMetabolicModel
-from State import State
-from State import CobraMetabolicStateBuilder
+from core.AbstractMetabolicModel import AbstractMetabolicModel
+from core.State import State
+from core.State import CobraMetabolicStateBuilder
 
 from enum import Enum
 import cobra
