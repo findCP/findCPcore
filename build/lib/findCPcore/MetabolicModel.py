@@ -1,4 +1,4 @@
-from core.AbstractMetabolicModel import AbstractMetabolicModel
+from AbstractMetabolicModel import AbstractMetabolicModel
 
 
 class MetabolicModel(AbstractMetabolicModel):

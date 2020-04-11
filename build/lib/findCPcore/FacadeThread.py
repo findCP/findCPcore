@@ -3,7 +3,7 @@ import inspect
 import ctypes
 import time
 
-from core.FacadeUtils import FacadeUtils
+from FacadeUtils import FacadeUtils
 
 TASK_READ_MODEL = "READ_MODEL"
 TASK_SAVE_DEM = "SAVE_DEM"

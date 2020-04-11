@@ -1,8 +1,8 @@
 import xlwt
 
-from core.MetabolicModel import MetabolicModel
-from core.CobraMetabolicModel import CobraMetabolicModel
-from core.Spreadsheet import Spreadsheet
+from MetabolicModel import MetabolicModel
+from CobraMetabolicModel import CobraMetabolicModel
+from Spreadsheet import Spreadsheet
 
 class ErrorGeneratingModel(Exception):
 	pass
