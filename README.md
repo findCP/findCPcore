@@ -1,4 +1,4 @@
-# findCP-core
+# findCPcore
 
 [![Documentation Status](https://readthedocs.org/projects/findCP/badge/?version=latest&style=flat-square)](https://findCP.readthedocs.io/en/latest/?badge=latest)		[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
@@ -14,7 +14,7 @@ The documentation can be found at [readthedocs](https://findCP.readthedocs.io/en
 ## Install
 
 ```sh
-$ pip3 install findCP-core
+$ pip3 install findCPcore
 ```
 
 
