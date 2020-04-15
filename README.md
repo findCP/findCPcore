@@ -15,7 +15,7 @@ The documentation can be found at [readthedocs](https://findcpcore.readthedocs.i
 ## Install
 
 ```sh
-$ pip3 install findCPcore
+$ pip install findCPcore
 ```
 
 
