@@ -308,6 +308,9 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 				error_list = errors[code]
 				if error_list != []:
 					raise Exception("Error reading model: " + error_list[0])
+			# Unexpected error
+			raise exception
+			
 
 		sys.stderr = original_stderr  # turn STDERR back on
 
