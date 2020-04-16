@@ -29,10 +29,8 @@ from sys import platform
 # On windows, when deployed with pyinstaller, FVA and other methods get blocked on multiprocessing.
 if platform == "win32":
 	PROCESSES = 1
-	print("Multiprocessing: no")
 else:
 	PROCESSES = None
-	print("Multiprocessing: yes")
 
 CONST_EPSILON = 0.000005
 
@@ -281,6 +279,9 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 			else:
 				sys.stderr = original_stderr  # turn STDERR back on
 				raise RuntimeError("Model file must be either .xml .json .yml")
+
+			# Set default solver: glpk
+			self.__cobra_model.solver = 'glpk'
 
 			# Generate exchange/demand reactions list
 			exchanges = self.__cobra_model.exchanges
