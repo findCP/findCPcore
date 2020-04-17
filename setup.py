@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="findCPcore",
-    version="0.0.6",
+    version="0.0.7",
     author="Alex Oarga",
     author_email="alex718123@gmail.com",
     description="findCP core package",
@@ -19,7 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        "cobra==0.15.4",
+        "cobra==0.16.0",
         "depinfo",
         "future",
         "mpmath",
