@@ -267,6 +267,9 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		original_stderr = sys.stderr  # keep a reference to STDERR
 		sys.stderr = NullDevice()  # redirect the real STDERR
 		try:
+			# Default interface
+			cobra.core.model.configuration.solver = 'glpk'
+
 			# check if file exists
 			open(path, 'r')
 			# read model
