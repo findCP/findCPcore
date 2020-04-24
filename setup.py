@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="findCPcore",
-    version="0.0.8",
+    version="0.0.9",
     author="Alex Oarga",
     author_email="alex718123@gmail.com",
     description="findCP core package",
@@ -39,5 +39,5 @@ setuptools.setup(
         "xlwt==1.3.0",
 	"six",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.5',
 )

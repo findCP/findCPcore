@@ -83,10 +83,10 @@ class FacadeUtils:
 			sheet.write(y+2, i+4, len(fva_dead_reactions))
 			sheet.write(y+3, i+4, len(chokepoints))
 
-		sheet.write(y, 2, "RR", style=style)
-		sheet.write(y+1, 2, "NR", style=style)
-		sheet.write(y+2, 2, "DR", style=style)
-		sheet.write(y+3,   2, "CP", style=style)
+		sheet.write(y, 2, "Reversible Reactions (RR)", style=style)
+		sheet.write(y+1, 2, "Non-reversible Reactions (NR)", style=style)
+		sheet.write(y+2, 2, "Dead Reactions (DR)", style=style)
+		sheet.write(y+3,   2, "Chokepoints (CP)", style=style)
 
 		sheet.write(0,3, "INITIAL", style=style)
 		sheet.write(y, 3, len(reversible_initial))
