@@ -96,6 +96,12 @@ class AbstractMetabolicModel(ABC):
 	def essential_reactions(self):
 		pass
 
+	@abstractmethod
+	def dead_reactions(self):
+		""" Returns a list of dead reactions of the model.
+
+		"""
+		pass
 
 	@abstractmethod	
 	def find_dem(self, compartment):

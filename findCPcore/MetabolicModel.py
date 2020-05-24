@@ -1,4 +1,5 @@
-from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
+#from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
+from AbstractMetabolicModel import AbstractMetabolicModel
 
 
 class MetabolicModel(AbstractMetabolicModel):
@@ -69,6 +70,9 @@ class MetabolicModel(AbstractMetabolicModel):
 
 	def essential_reactions(self):
 		return self.__model.essential_reactions()
+
+	def dead_reactions(self):
+		return self.__model.dead_reactions()
 
 	def find_dem(self, compartment="ALL"):
 		return self.__model.find_dem(compartment)

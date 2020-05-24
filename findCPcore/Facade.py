@@ -3,8 +3,10 @@ import inspect
 import ctypes
 import time
 
-from findCPcore.FacadeUtils import FacadeUtils
-from findCPcore.FacadeThread import FacadeThread, ThreadInterrupt
+#from findCPcore.FacadeUtils import FacadeUtils
+#from findCPcore.FacadeThread import FacadeThread, ThreadInterrupt
+from FacadeUtils import FacadeUtils
+from FacadeThread import FacadeThread, ThreadInterrupt
 
 TASK_READ_MODEL = "READ_MODEL"
 TASK_SAVE_DEM = "SAVE_DEM"

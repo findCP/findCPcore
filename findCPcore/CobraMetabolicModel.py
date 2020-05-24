@@ -1,6 +1,9 @@
-from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
-from findCPcore.State import State
-from findCPcore.State import CobraMetabolicStateBuilder
+#from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
+#from findCPcore.State import State
+#from findCPcore.State import CobraMetabolicStateBuilder
+from AbstractMetabolicModel import AbstractMetabolicModel
+from State import State
+from State import CobraMetabolicStateBuilder
 
 from enum import Enum
 import cobra
@@ -779,6 +782,13 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 
 
 	def find_essential_reactions_1(self):
+		""" Computes the list of essential reactions of the model
+			Saves the result in __essential_reactions attribute.
+			Returns a list of error during the computation.
+
+		:return: list of error during the computation.
+		:rtype: list of str
+		"""
 		errors = []
 		try:
 			self.__objective_value = self.get_growth()
@@ -797,8 +807,12 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 
 
 	def find_essential_genes_1(self):
-		""" If the model has genes, finds the essential genes and assigns them to the '__essential_genes' class atribute.
+		""" Computes the list of essential genes of the model
+			Saves the result in __essential_genes attribute.
+			Returns a list of error during the computation.
 
+		:return: list of error during the computation.
+		:rtype: list of str
 		"""
 		errors = []
 		try:

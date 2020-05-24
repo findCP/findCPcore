@@ -15,6 +15,9 @@ class Spreadsheet:
 
 	def set_workbook(self, workbook):
 		self.__spreadsheet = workbook
+
+	def get_workbook(self):
+		return self.__spreadsheet
 		
 
 	def spreadsheet_write_model_info(self, state, sheet_name):
@@ -152,7 +155,8 @@ class Spreadsheet:
 			sheet.write(i, 3, reaction.upper_bound)
 			sheet.write(i, 4, reaction.lower_bound)
 			if print_genes:
-				sheet.write(i, 5, reaction.gene_reaction_rule)
+				gpr = (reaction.gene_reaction_rule[:32760] + '...') if len(reaction.gene_reaction_rule) > 32765 else reaction.gene_reaction_rule
+				sheet.write(i, 5, gpr)
 				for gen in reaction.genes:
 					sheet.write(i, 6, gen.id)
 					i = i + 1
@@ -196,7 +200,8 @@ class Spreadsheet:
 					reactions.append(r)
 				reactions.sort(key=self.__id)
 				for reaction in reactions:
-					sheet.write(i, 2, reaction.gene_reaction_rule)
+					gpr = (reaction.gene_reaction_rule[:32760] + '...') if len(reaction.gene_reaction_rule) > 32765 else reaction.gene_reaction_rule
+					sheet.write(i, 2, gpr)
 					sheet.write(i, 3, reaction.id)
 					sheet.write(i, 4, reaction.name)
 					i = i + 1
@@ -365,13 +370,15 @@ class Spreadsheet:
 				reactions = gene.reactions
 				sheet.write(row, 0, gene.id)
 				sheet.write(row, 1, gene.name)
+				gpr = (reactions[0].gene_reaction_rule[:32760] + '...') if len(reactions[0].gene_reaction_rule) > 32765 else reactions[0].gene_reaction_rule
 				sheet.write(row, 2, reactions[0].gene_reaction_rule)
 				sheet.write(row, 3, reactions[0].id)
 				sheet.write(row, 4, reactions[0].name)
 				row = row + 1
 				i = 1
 				while i < len(reactions):
-					sheet.write(row, 2, reactions[i].gene_reaction_rule)
+					gpr = (reactions[i].gene_reaction_rule[:32760] + '...') if len(reactions[i].gene_reaction_rule) > 32765 else reactions[i].gene_reaction_rule
+					sheet.write(row, 2, gpr)
 					sheet.write(row, 3, reactions[i].id)
 					sheet.write(row, 4, reactions[i].name)
 					i = i + 1
@@ -417,7 +424,8 @@ class Spreadsheet:
 				genes = reactions[reaction]
 				sheet.write(row, 0, reaction.id)
 				sheet.write(row, 1, reaction.name)
-				sheet.write(row, 2, reaction.gene_reaction_rule)
+				gpr = (reaction.gene_reaction_rule[:32760] + '...') if len(reaction.gene_reaction_rule) > 32765 else reaction.gene_reaction_rule
+				sheet.write(row, 2, gpr)
 				sheet.write(row, 3, genes[0].id)
 				sheet.write(row, 4, genes[0].name)
 				row = row + 1

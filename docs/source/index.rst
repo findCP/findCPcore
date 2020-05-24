@@ -10,8 +10,8 @@ Welcome to findCritical's documentation!
     :maxdepth: 4
     :glob:
 
-    developer-documentation
-    deploy-documentation
+    CORE
+    SPREADSHEET
     project-documentation
 
 .. only:: html
