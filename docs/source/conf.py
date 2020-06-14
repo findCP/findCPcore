@@ -9,6 +9,7 @@ import sphinx_rtd_theme
 extensions = [
     'nbsphinx',
     'sphinx.ext.mathjax',
+    'recommonmark'
 ]
 
 # Exclude build directory and Jupyter backup files:
@@ -52,7 +53,7 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 master_doc = 'index'
 
-project = 'findCritical'
+project = 'findCPcore'
 author = 'Alex Oarga'
 copyright = '2020, ' + author
 

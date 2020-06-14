@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CORE &mdash; findCritical version 7c76bc2</title>
+  <title>Developer documentation &mdash; findCritical version 7c76bc2</title>
   
 
   
@@ -35,7 +35,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SPREADSHEET documentation" href="SPREADSHEET.html" />
+    <link rel="prev" title="Welcome to findCritical’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -79,8 +81,54 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="CORE.html">Developer documentation</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#CORE">CORE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Import-core-modules">Import core modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Read-metabolic-model">Read metabolic model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Get-model-info">Get model info</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model-info">Model info</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Metabolites">Metabolites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reactions">Reactions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Genes">Genes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Dead-end-metabolites">Dead-end metabolites</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Finding-Dead-end-metabolites">Finding Dead-end metabolites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Removing-dead-end-metabolites">Removing dead-end metabolites</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Dead-reactions">Dead reactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Finding-Dead-reactions">Finding Dead reactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Chokepoint-reactions">Chokepoint reactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Finding-chokepoint-reactions">Finding chokepoint reactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Flux-Balance-Analysis">Flux Balance Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Flux-Variability-Analysis">Flux Variability Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Updating-reaction's-flux-with-FVA">Updating reaction’s flux with FVA</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Essential-genes">Essential genes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Finding-essential-genes">Finding essential genes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Essential-reactions">Essential reactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Finding-essential-reactions">Finding essential reactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Essential-genes-reactions">Essential genes reactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Finding-essential-genes-reactions">Finding essential genes reactions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Spreadsheet">Spreadsheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Facade">Facade</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="SPREADSHEET.html">SPREADSHEET documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project-documentation.html">Project Documentation</a></li>
 </ul>
@@ -128,13 +176,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>CORE</li>
+      <li>Developer documentation</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/developer-documentation.ipynb" rel="nofollow"> View page source</a>
+            <a href="_sources/CORE.ipynb" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -402,10 +450,10 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
+<div class="section" id="Developer-documentation">
+<h1>Developer documentation<a class="headerlink" href="#Developer-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="CORE">
-<h1>CORE<a class="headerlink" href="#CORE" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>CORE<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>CORE<a class="headerlink" href="#CORE" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="Import-core-modules">
 <h3>Import core modules<a class="headerlink" href="#Import-core-modules" title="Permalink to this headline">¶</a></h3>
 <p>In order to use <strong>findCritical</strong> library you have to import the following core modules.</p>
@@ -1400,6 +1448,15 @@ ACACT1r     |   -3.26642
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="SPREADSHEET.html" class="btn btn-neutral float-right" title="SPREADSHEET documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to findCritical’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
