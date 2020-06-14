@@ -1,9 +1,9 @@
-#from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
-#from findCPcore.State import State
-#from findCPcore.State import CobraMetabolicStateBuilder
-from AbstractMetabolicModel import AbstractMetabolicModel
-from State import State
-from State import CobraMetabolicStateBuilder
+from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
+from findCPcore.State import State
+from findCPcore.State import CobraMetabolicStateBuilder
+#from AbstractMetabolicModel import AbstractMetabolicModel
+#from State import State
+#from State import CobraMetabolicStateBuilder
 
 from enum import Enum
 import cobra
