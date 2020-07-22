@@ -3,9 +3,6 @@ import xlwt
 from findCPcore.MetabolicModel import MetabolicModel
 from findCPcore.CobraMetabolicModel import CobraMetabolicModel
 from findCPcore.Spreadsheet import Spreadsheet
-#from MetabolicModel import MetabolicModel
-#from CobraMetabolicModel import CobraMetabolicModel
-#from Spreadsheet import Spreadsheet
 
 class ErrorGeneratingModel(Exception):
 	pass
@@ -270,8 +267,8 @@ class FacadeUtils:
 				spreadsheet.spreadsheet_save_file(output_path)
 				return (True, output_path)
 			except Exception as error:
-				print("remove raise on FacadeUtils.273")
-				raise error
+				#print("remove raise on FacadeUtils.273")
+				#raise error
 				return (False, str(error))
 		return (False, '')
 

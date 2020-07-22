@@ -1,5 +1,4 @@
 from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
-#from AbstractMetabolicModel import AbstractMetabolicModel
 
 
 class MetabolicModel(AbstractMetabolicModel):

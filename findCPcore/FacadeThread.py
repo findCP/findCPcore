@@ -4,7 +4,6 @@ import ctypes
 import time
 
 from findCPcore.FacadeUtils import FacadeUtils
-#from FacadeUtils import FacadeUtils
 
 TASK_READ_MODEL = "READ_MODEL"
 TASK_SAVE_DEM = "SAVE_DEM"
@@ -170,8 +169,8 @@ class FacadeThread(threading.Thread):
 		except Exception as error:
 			# Thread stopped
 			# This raise is just for debugging purposes
-			print("DEBUG: please remove in FacadeThread.py:", str(error))
-			raise error
-			print("Error:", str(error))
+			#print("DEBUG: please remove in FacadeThread.py:", str(error))
+			#raise error
+			#print("Error:", str(error))
 			pass
 
