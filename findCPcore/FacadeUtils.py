@@ -1,12 +1,12 @@
 import xlwt
 
-#from findCPcore.MetabolicModel import MetabolicModel
-#from findCPcore.CobraMetabolicModel import CobraMetabolicModel
-#from findCPcore.Spreadsheet import Spreadsheet
+from findCPcore.MetabolicModel import MetabolicModel
+from findCPcore.CobraMetabolicModel import CobraMetabolicModel
+from findCPcore.Spreadsheet import Spreadsheet
 
-from MetabolicModel import MetabolicModel
-from CobraMetabolicModel import CobraMetabolicModel
-from Spreadsheet import Spreadsheet
+#from MetabolicModel import MetabolicModel
+#from CobraMetabolicModel import CobraMetabolicModel
+#from Spreadsheet import Spreadsheet
 
 class ErrorGeneratingModel(Exception):
 	pass
