@@ -63,7 +63,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		__essential_genes_reactions (): Dict containing the reactions associated to the essential genes.
 			Key: cobra.core.reaction.
 			Value: list of cobra.core.gene containing the genes associated to the reaction.
-		__essential_reactions (): dict: key: reaction id, value: float or "infeasible"
+		__essential_reactions (): dict: key: cobra.core.reaction, value: float or "infeasible"
 
 		__spreadsheet (): xlwt Workbook
 	"""

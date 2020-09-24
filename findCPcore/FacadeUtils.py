@@ -1,8 +1,12 @@
 import xlwt
 
-from findCPcore.MetabolicModel import MetabolicModel
-from findCPcore.CobraMetabolicModel import CobraMetabolicModel
-from findCPcore.Spreadsheet import Spreadsheet
+#from findCPcore.MetabolicModel import MetabolicModel
+#from findCPcore.CobraMetabolicModel import CobraMetabolicModel
+#from findCPcore.Spreadsheet import Spreadsheet
+
+from MetabolicModel import MetabolicModel
+from CobraMetabolicModel import CobraMetabolicModel
+from Spreadsheet import Spreadsheet
 
 class ErrorGeneratingModel(Exception):
 	pass
@@ -213,6 +217,9 @@ class FacadeUtils:
 		s.spreadsheet_write_chokepoints_genes("comparison", model.get_state("initial"),
 		                                      model.get_state("dem"),
 		                                      model.get_state("fva"), model.get_state("fva_dem"))
+		s.spreadsheet_write_essential_genes_comparison("essential genes", model.get_state("initial"),
+		                                      model.get_state("dem"),
+		                                      model.get_state("fva"), model.get_state("fva_dem"), ordered=True)
 		s.spreadsheet_write_essential_reactions("essential reactions", model.get_state("initial"),
 		                                      model.get_state("dem"),
 		                                      model.get_state("fva"), model.get_state("fva_dem"), ordered=True)

@@ -3,8 +3,11 @@ import inspect
 import ctypes
 import time
 
-from findCPcore.FacadeUtils import FacadeUtils
-from findCPcore.FacadeThread import FacadeThread, ThreadInterrupt
+#from findCPcore.FacadeUtils import FacadeUtils
+#from findCPcore.FacadeThread import FacadeThread, ThreadInterrupt
+
+from FacadeUtils import FacadeUtils
+from FacadeThread import FacadeThread, ThreadInterrupt
 
 TASK_READ_MODEL = "READ_MODEL"
 TASK_SAVE_DEM = "SAVE_DEM"
@@ -133,8 +136,7 @@ class Facade:
 			self.model = f.find_and_remove_dem(model_path)
 		else:
 			self.thread1 = FacadeThread(self.model_path)
-			self.thread1.set_task(TASK_FIND_AND_REMOVE_DEM, notify_function=print_f, args1=args1, args2=None,
-			                      output_path=output_path)
+			self.thread1.set_task(TASK_FIND_AND_REMOVE_DEM, notify_function=print_f, args1=args1, args2=None, output_path=output_path)
 			self.thread1.start()
 			self.tid = self.thread1.get_my_tid()
 

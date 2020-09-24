@@ -141,27 +141,19 @@ class Spreadsheet:
 		sheet = self.__spreadsheet.add_sheet(sheet_name)
 		sheet.write(0, 0, "REACTION ID", style=style)
 		sheet.write(0, 1, "REACTION NAME", style=style)
-		sheet.write(0, 2, "REACTION", style=style)
-		sheet.write(0, 3, "UPPER BOUND", style=style)
-		sheet.write(0, 4, "LOWER BOUND", style=style)
-		if print_genes:
-			sheet.write(0, 5, "GENE RELATION", style=style)
-			sheet.write(0, 6, "GENE ID", style=style)
+		sheet.write(0, 2, "REACTION GPR", style=style)
+		sheet.write(0, 3, "REACTION", style=style)
+		sheet.write(0, 4, "UPPER BOUND", style=style)
+		sheet.write(0, 5, "LOWER BOUND", style=style)
 		i = 1
 		for reaction in reactions:
 			sheet.write(i, 0, reaction.id)
 			sheet.write(i, 1, reaction.name)
-			sheet.write(i, 2, reaction.reaction)
-			sheet.write(i, 3, reaction.upper_bound)
-			sheet.write(i, 4, reaction.lower_bound)
-			if print_genes:
-				gpr = (reaction.gene_reaction_rule[:32760] + '...') if len(reaction.gene_reaction_rule) > 32765 else reaction.gene_reaction_rule
-				sheet.write(i, 5, gpr)
-				for gen in reaction.genes:
-					sheet.write(i, 6, gen.id)
-					i = i + 1
-			if not print_genes or len(reaction.genes) == 0:
-				i = i + 1
+			sheet.write(i, 2, reaction.gene_reaction_rule[:32760])
+			sheet.write(i, 3, reaction.reaction)
+			sheet.write(i, 4, reaction.upper_bound)
+			sheet.write(i, 5, reaction.lower_bound)
+			i = i + 1
 
 
 	def spreadsheet_write_metabolites(self, state, sheet_name, ordered=True, print_reactions=False):
@@ -488,6 +480,48 @@ class Spreadsheet:
 				sheet.write(row, 4, reactions_fva[reaction.id])
 			if reaction.id in reactions_fva_dem_key:
 				sheet.write(row, 5, reactions_fva_dem[reaction.id])
+			row = row + 1
+
+	def spreadsheet_write_essential_genes_comparison(self, sheet_name, state_initial, state_dem, state_fva, state_fva_dem, ordered=True):
+		"""
+		"""
+		if self.__spreadsheet is None:
+			self.spreadsheet_init()
+
+		essential_genes_initial = [g.id for g in state_initial.essential_genes()]
+		essential_genes_dem     = [g.id for g in state_dem.essential_genes()]
+		essential_genes_fva     = [g.id for g in state_fva.essential_genes()]
+		essential_genes_fva_dem = [g.id for g in state_fva_dem.essential_genes()]
+
+		style = xlwt.XFStyle()
+		font = xlwt.Font()
+		font.bold = True
+		style.font = font
+		sheet = self.__spreadsheet.add_sheet(sheet_name)
+		sheet.write(0, 0, "GENE ID", style=style)
+		sheet.write(0, 1, "GENE NAME", style=style)
+		sheet.write(0, 2, "MODEL INITIAL", style=style)
+		sheet.write(0, 3, "MODEL WITHOUT DEM", style=style)
+		sheet.write(0, 4, "MODEL FVA", style=style)
+		sheet.write(0, 5, "MODE FVA WITHOUT DEM", style=style)
+
+		if ordered:
+			genes = sorted(state_initial.genes(), key=self.__id)
+		else:
+			genes = state_initial.genes()
+
+		row = 1
+		for gene in genes:
+			sheet.write(row, 0, gene.id)
+			sheet.write(row, 1, gene.name)
+			if gene.id in essential_genes_initial:
+				sheet.write(row, 2, True)
+			if gene.id in essential_genes_dem:
+				sheet.write(row, 3, True)
+			if gene.id in essential_genes_fva:
+				sheet.write(row, 4, True)
+			if gene.id in essential_genes_fva_dem:
+				sheet.write(row, 5, True)
 			row = row + 1
 
 
