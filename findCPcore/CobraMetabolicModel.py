@@ -1,16 +1,29 @@
-from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
-from findCPcore.State import State
-from findCPcore.State import CobraMetabolicStateBuilder
+import os
+import itertools
+import sys
+import threading
+import inspect
+import ctypes
 
-#from AbstractMetabolicModel import AbstractMetabolicModel
-#from State import State
-#from State import CobraMetabolicStateBuilder
+from dotenv   import load_dotenv
+load_dotenv()
 
-from enum import Enum
+ENV_ENVIRONMENT = "ENVIRONMENT"
+ENV_DEV = "DEV"
+ENV_PRO = "PRO"
+
+if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
+	# imports on development
+	from AbstractMetabolicModel import AbstractMetabolicModel
+	from State import State
+	from State import CobraMetabolicStateBuilder
+else:
+	# imports on release
+	from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
+	from findCPcore.State import State
+	from findCPcore.State import CobraMetabolicStateBuilder
+
 import cobra
-
-from math import isnan
-
 from cobra.io.sbml import validate_sbml_model
 from cobra.flux_analysis import flux_variability_analysis
 from cobra.manipulation import delete
@@ -20,15 +33,11 @@ from cobra.flux_analysis import find_essential_reactions
 
 from optlang.exceptions import SolverError
 
-import itertools
-import sys
-import threading
-import inspect
-import ctypes
-
-from time import sleep
 from multiprocessing import Process
-from sys import platform
+from time import sleep
+from sys  import platform
+from enum import Enum
+from math import isnan
 
 # On windows, when deployed with pyinstaller, FVA and other methods get blocked on multiprocessing.
 if platform == "win32":
@@ -89,6 +98,20 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 	# direction to avoid a direction swap ((<-) to (->)).
 	__initial_backward_reactions = set({})
 
+	# Number of processes to run FVA / compute essential genes
+        # By default this value will be PROCESSES constant value
+	__processes = None
+
+	@property
+	def processes(self):
+		return self.__processes
+
+	@processes.setter
+	def processes(self, processes):
+		self.__processes = processes
+
+	def epsilon(self):
+		return CONST_EPSILON
 
 	def model(self):
 		return self.__cobra_model
@@ -243,12 +266,6 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		BACKWARD = 1
 		REVERSIBLE = 2
 
-
-	def __init__(self, path=None):
-		if path is not None:
-			self.read_model(path)
-
-
 	def __print_errors(self, errors):
 		for elem in errors:
 			aux = errors.get(elem)
@@ -256,6 +273,14 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 				print(elem)
 				for error in aux:
 					print("    ", error)
+
+
+	def __init__(self, path=None):
+
+		self.__processes = PROCESSES
+
+		if path is not None:
+			self.read_model(path)
 
 
 	def read_model(self, path):
@@ -727,9 +752,9 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 			fva_result = []
 			# Run FVA analysis
 			if threshold is None and pfba_factor is None:
-				fva_reactions = flux_variability_analysis(self.__cobra_model, loopless=loopless, processes=PROCESSES)
+				fva_reactions = flux_variability_analysis(self.__cobra_model, loopless=loopless, processes=self.__processes)
 			else:
-				fva_reactions = flux_variability_analysis(self.__cobra_model, loopless=loopless, fraction_of_optimum=threshold,  pfba_factor=pfba_factor, processes=PROCESSES)
+				fva_reactions = flux_variability_analysis(self.__cobra_model, loopless=loopless, fraction_of_optimum=threshold,  pfba_factor=pfba_factor, processes=self.__processes)
 			for reaction_id in fva_reactions.index:
 				reaction = self.__cobra_model.reactions.get_by_id(reaction_id)
 				fva_lower = float(fva_reactions.values[i][0])
@@ -742,8 +767,16 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 					print("    fva ranges:   [", str(fva_upper)[:10].ljust(10), ", ", str(fva_lower)[:10].ljust(10), "]")
 				# Update bounds
 				if update_flux:
-					reaction.lower_bound = fva_lower
+					# change assignmentes to avoid inconsistent flux
+					# see: https://github.com/opencobra/cobrapy/issues/793
+		
+					if reaction.lower_bound > fva_upper:
+						reaction.lower_bound = fva_upper
 					reaction.upper_bound = fva_upper
+
+					if reaction.upper_bound < fva_lower:
+						reaction.upper_bound = fva_lower
+					reaction.lower_bound = fva_lower
 				i = i + 1
 				# Add results to list
 				fva_result.append( (reaction, fva_upper, fva_lower)  )
@@ -757,6 +790,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 				errors.append("Model is unbounded")
 			else:
 				errors.append(str(error))
+
 		return errors
 
 
@@ -796,11 +830,11 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 			if isnan(self.__objective_value):
 				self.__objective_value = None
 			self.__essential_reactions = {}
-			deletions = single_reaction_deletion(self.__cobra_model, method='fba', processes=PROCESSES)
+			deletions = single_reaction_deletion(self.__cobra_model, method='fba', processes=self.__processes)
 			essential = deletions.loc[:, :]['growth']
-			for frozset in essential.index.values:
-				reaction = self.__cobra_model.reactions.get_by_id(list(frozset)[0])
-				self.__essential_reactions[reaction] = essential[frozset]
+			for r, g in essential.iteritems():
+				reaction = self.__cobra_model.reactions.get_by_id(list(r)[0])
+				self.__essential_reactions[reaction] = g
 		except Exception as error:
 			errors.append(str(error))
 			self.__essential_reactions = {}
@@ -818,7 +852,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		errors = []
 		try:
 			# TODO: check processes number (because deadlock)
-			aux = cobra.flux_analysis.variability.find_essential_genes(self.__cobra_model, processes=PROCESSES)
+			aux = cobra.flux_analysis.variability.find_essential_genes(self.__cobra_model, processes=self.__processes)
 			self.__essential_genes = aux
 		except cobra.exceptions.Infeasible as error:
 			self.__essential_genes = []

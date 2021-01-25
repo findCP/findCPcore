@@ -1,18 +1,44 @@
 import xlwt
+import os
 
-from findCPcore.MetabolicModel import MetabolicModel
-from findCPcore.CobraMetabolicModel import CobraMetabolicModel
-from findCPcore.Spreadsheet import Spreadsheet
+from dotenv   import load_dotenv
+load_dotenv()
 
-#from MetabolicModel import MetabolicModel
-#from CobraMetabolicModel import CobraMetabolicModel
-#from Spreadsheet import Spreadsheet
+ENV_ENVIRONMENT = "ENVIRONMENT"
+ENV_DEV = "DEV"
+ENV_PRO = "PRO"
+
+if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
+	# imports on development
+	from MetabolicModel      import MetabolicModel
+	from CobraMetabolicModel import CobraMetabolicModel
+	from Spreadsheet         import Spreadsheet
+else:
+	# imports on release
+	from findCPcore.MetabolicModel      import MetabolicModel
+	from findCPcore.CobraMetabolicModel import CobraMetabolicModel
+	from findCPcore.Spreadsheet         import Spreadsheet
+
 
 class ErrorGeneratingModel(Exception):
 	pass
 
 
 class FacadeUtils:
+
+	__processes = None
+
+	@property
+	def processes(self):
+		return self.__processes
+
+	@processes.setter
+	def processes(self, processes):
+		self.__processes = processes
+
+	def __init__(self, processes = None):
+		self.__processes = processes
+		
 
 	def run_sensibility_analysis(self, model_path, print_f, arg1, arg2, objective=None):
 		s = xlwt.Workbook()
@@ -29,6 +55,8 @@ class FacadeUtils:
 		model = CobraMetabolicModel(MODEL)
 		if objective is not None:
 			model.set_objective(objective)
+		if self.__processes is not None:
+			model.processes = self.__processes 
 
 		reversible_initial = set([r.id for r in list(filter(lambda x: model.reaction_direction(x)==model._Direction.REVERSIBLE, model.reactions()))])
 		dead_reactions_initial = set([r.id for r in model.dead_reactions()])
@@ -54,6 +82,9 @@ class FacadeUtils:
 			model = CobraMetabolicModel(MODEL)
 			if objective is not None:
 				model.set_objective(objective)
+			if self.__processes is not None:
+				model.processes = self.__processes 
+
 			errors_fva = model.fva(update_flux=True, threshold=FRAC[i])
 
 			if errors_fva != []:
@@ -108,9 +139,11 @@ class FacadeUtils:
 		#verboseprint = print if verbose else lambda *a, **k: None
 
 		print_f("Reading model...", arg1, arg2)
-		model = MetabolicModel(CobraMetabolicModel(model_path))
+		model = CobraMetabolicModel(model_path)
 		if objective is not None:
 			model.set_objective(objective)
+		if self.__processes is not None:
+			model.processes = self.__processes
 
 		model.set_state("initial")
 		model.set_state("dem")
@@ -160,14 +193,13 @@ class FacadeUtils:
 		model.set_state("dem")
 
 		print_f("Running Flux Variability Analysis...", arg1, arg2)
-		model = MetabolicModel(CobraMetabolicModel(model_path))
-
-		#reaction_ob = model.model().reactions.get_by_id("EX_cl_LPAREN_e_RPAREN_")
-		#reaction_ob.upper_bound = float(0.0)
-		#reaction_ob.lower_bound = float(0.0)
+		model = CobraMetabolicModel(model_path)
 
 		if objective is not None:
 			model.set_objective(objective)
+		if self.__processes is not None:
+			model.processes = self.__processes
+
 		errors_fva = model.fva(update_flux=True, threshold=fraction)
 
 		if errors_fva != []:
@@ -230,15 +262,20 @@ class FacadeUtils:
 		return s
 
 	def find_and_remove_dem(self, model_path):
-		model = MetabolicModel(CobraMetabolicModel(model_path))
+		model = CobraMetabolicModel(model_path)
 		model.find_dem()
 		model.remove_dem()
 		return model
 
 	def run_fva(self, model_path, objective=None, fraction=1.0):
-		model = MetabolicModel(CobraMetabolicModel(model_path))
+
+		model = CobraMetabolicModel(model_path)
+
 		if objective is not None:
 			model.set_objective(objective)
+		if self.__processes is not None:
+			model.processes = self.__processes
+
 		errors_fva = model.fva(update_flux=True)
 		errors = model.fva(update_flux=True, threshold=fraction)
 		if errors != []:
@@ -247,9 +284,14 @@ class FacadeUtils:
 			return (model, "")
 
 	def run_fva_remove_dem(self, model_path, objective=None, fraction=1.0):
-		model = MetabolicModel(CobraMetabolicModel(model_path))
+
+		model = CobraMetabolicModel(model_path)
+
 		if objective is not None:
 			model.set_objective(objective)
+		if self.__processes is not None:
+			model.processes = self.__processes
+
 		errors = model.fva(update_flux=True, threshold=fraction)
 		if errors != []:
 			return (model, errors[0])
@@ -281,7 +323,7 @@ class FacadeUtils:
 
 	def read_model(self, model_path):
 		try:
-			model = MetabolicModel(CobraMetabolicModel(model_path))
+			model = CobraMetabolicModel(model_path)
 			model_id = model.id()
 			reactions = len(model.reactions())
 			metabolites = len(model.metabolites())

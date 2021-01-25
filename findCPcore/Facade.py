@@ -1,13 +1,24 @@
+import os
+from dotenv   import load_dotenv
+load_dotenv()
+
+ENV_ENVIRONMENT = "ENVIRONMENT"
+ENV_DEV = "DEV"
+ENV_PRO = "PRO"
+
+if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
+	# imports on development
+	from FacadeUtils import FacadeUtils
+	from FacadeThread import FacadeThread, ThreadInterrupt
+else:
+	# imports on release
+	from findCPcore.FacadeUtils import FacadeUtils
+	from findCPcore.FacadeThread import FacadeThread, ThreadInterrupt
+
 import threading
 import inspect
 import ctypes
 import time
-
-from findCPcore.FacadeUtils import FacadeUtils
-from findCPcore.FacadeThread import FacadeThread, ThreadInterrupt
-
-#from FacadeUtils import FacadeUtils
-#from FacadeThread import FacadeThread, ThreadInterrupt
 
 TASK_READ_MODEL = "READ_MODEL"
 TASK_SAVE_DEM = "SAVE_DEM"
@@ -33,6 +44,16 @@ class Facade:
 
 	thread1 = None
 	tid = None
+
+	__processes = None
+
+	@property
+	def processes(self):
+		return self.__processes
+
+	@processes.setter
+	def processes(self, processes):
+		self.__processes = processes
 
 	def isAlive_tid(self, tid_input):
 		for tid, tobj in threading._active.items():
@@ -94,6 +115,7 @@ class Facade:
 	def generate_spreadsheet(self, stoppable, model_path, print_f, args1=None, args2=None, output_path=None, objective=None, fraction=1.0):
 		if not stoppable:
 			f = FacadeUtils()
+			f.processes = self.__processes
 			self.spreadsheet = f.run_summary_model(model_path, print_f, args1, args2, objective, fraction)
 			if self.spreadsheet is not None and output_path is not None:
 				self.save_spreadsheet(stoppable, output_path, print_f)
@@ -107,6 +129,7 @@ class Facade:
 	def generate_sensibility_spreadsheet(self, stoppable, model_path, print_f, args1=None, args2=None, output_path=None, objective=None):
 		if not stoppable:
 			f = FacadeUtils()
+			f.processes = self.__processes
 			self.spreadsheet = f.run_sensibility_analysis(model_path, print_f, args1, args2, objective)
 			if self.spreadsheet is not None and output_path is not None:
 				self.save_spreadsheet(stoppable, output_path, print_f)
@@ -121,6 +144,7 @@ class Facade:
 	def save_spreadsheet(self, stoppable, output_path, print_f):
 		if not stoppable:
 			f = FacadeUtils()
+			f.processes = self.__processes
 			(result_ok, text) = f.save_spreadsheet(output_path, self.spreadsheet)
 			return (result_ok, text)
 		else:
@@ -133,6 +157,7 @@ class Facade:
 	def find_and_remove_dem(self, stoppable, output_path, print_f, model_path, args1=None, args2=None):
 		if not stoppable:
 			f = FacadeUtils()
+			f.processes = self.__processes
 			self.model = f.find_and_remove_dem(model_path)
 		else:
 			self.thread1 = FacadeThread(self.model_path)
@@ -143,6 +168,7 @@ class Facade:
 	def run_fva(self, stoppable, output_path, print_f, model_path, args1=None, args2=None, objective=None, fraction=1.0):
 		if not stoppable:
 			f = FacadeUtils()
+			f.processes = self.__processes
 			(self.model, errors) = f.run_fva(model_path, objective, fraction)
 			return errors
 		else:
@@ -155,6 +181,7 @@ class Facade:
 	def run_fva_remove_dem(self, stoppable, output_path, print_f, model_path, args1=None, args2=None, objective=None, fraction=1.0):
 		if not stoppable:
 			f = FacadeUtils()
+			f.processes = self.__processes
 			(self.model, errors) = f.run_fva_remove_dem(model_path, objective, fraction)
 			return errors
 		else:
@@ -173,6 +200,7 @@ class Facade:
 			self.thread1.run()
 		else:
 			f = FacadeUtils()
+			f.processes = self.__processes
 			(result, text) = f.save_model(output_path, self.model)
 			return (result, text)
 

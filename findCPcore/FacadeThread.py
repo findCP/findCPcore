@@ -2,9 +2,21 @@ import threading
 import inspect
 import ctypes
 import time
+import os
 
-from findCPcore.FacadeUtils import FacadeUtils
-#from FacadeUtils import FacadeUtils
+from dotenv   import load_dotenv
+load_dotenv()
+
+ENV_ENVIRONMENT = "ENVIRONMENT"
+ENV_DEV = "DEV"
+ENV_PRO = "PRO"
+
+if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
+	# imports on development
+	from FacadeUtils import FacadeUtils
+else:
+	# imports on release
+	from findCPcore.FacadeUtils import FacadeUtils
 
 TASK_READ_MODEL = "READ_MODEL"
 TASK_SAVE_DEM = "SAVE_DEM"

@@ -1,4 +1,17 @@
-from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
+import os
+from dotenv   import load_dotenv
+load_dotenv()
+
+ENV_ENVIRONMENT = "ENVIRONMENT"
+ENV_DEV = "DEV"
+ENV_PRO = "PRO"
+
+if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
+	# imports on development
+	from AbstractMetabolicModel import AbstractMetabolicModel
+else:
+	# imports on release
+	from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
 
 
 class MetabolicModel(AbstractMetabolicModel):
