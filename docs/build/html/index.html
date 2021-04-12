@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to findCPcore’s documentation! &mdash; findCPcore version 2bee740</title>
+  <title>Welcome to findCPcore’s documentation! &mdash; findCPcore version eb7c87e</title>
   
 
   
@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Developer documentation" href="CORE.html" /> 
+    <link rel="next" title="1. findCPcore" href="CORE.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,7 +81,8 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="CORE.html">Developer documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE.html">1. findCPcore</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE.html#2.-FacadeUtils">2. FacadeUtils</a></li>
 </ul>
 
             
@@ -174,51 +175,52 @@
 <h1>Welcome to findCPcore’s documentation!<a class="headerlink" href="#welcome-to-findcpcore-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="CORE.html">Developer documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="CORE.html#CORE">CORE</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Import-core-modules">Import core modules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Read-metabolic-model">Read metabolic model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Get-model-info">Get model info</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Model-info">Model info</a></li>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Metabolites">Metabolites</a></li>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Reactions">Reactions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Genes">Genes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE.html">1. findCPcore</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Import-core-modules">Import core modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Read-metabolic-model">Read metabolic model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Get-model-info">Get model info</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Model-info">Model info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Metabolites">Metabolites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Reactions">Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Genes">Genes</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Dead-end-metabolites">Dead-end metabolites</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Finding-Dead-end-metabolites">Finding Dead-end metabolites</a></li>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Removing-dead-end-metabolites">Removing dead-end metabolites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Dead-end-metabolites">Dead-end metabolites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Finding-Dead-end-metabolites">Finding Dead-end metabolites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Removing-dead-end-metabolites">Removing dead-end metabolites</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Dead-reactions">Dead reactions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Finding-Dead-reactions">Finding Dead reactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Dead-reactions">Dead reactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Finding-Dead-reactions">Finding Dead reactions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Chokepoint-reactions">Chokepoint reactions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Finding-chokepoint-reactions">Finding chokepoint reactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Chokepoint-reactions">Chokepoint reactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Finding-chokepoint-reactions">Finding chokepoint reactions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Flux-Balance-Analysis">Flux Balance Analysis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Flux-Variability-Analysis">Flux Variability Analysis</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Updating-reaction's-flux-with-FVA">Updating reaction’s flux with FVA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Flux-Balance-Analysis">Flux Balance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Flux-Variability-Analysis">Flux Variability Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Updating-reaction's-flux-with-FVA">Updating reaction’s flux with FVA</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Essential-genes">Essential genes</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Finding-essential-genes">Finding essential genes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Essential-genes">Essential genes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Finding-essential-genes">Finding essential genes</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Essential-reactions">Essential reactions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Finding-essential-reactions">Finding essential reactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Essential-reactions">Essential reactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Finding-essential-reactions">Finding essential reactions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="CORE.html#Essential-genes-reactions">Essential genes reactions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CORE.html#Finding-essential-genes-reactions">Finding essential genes reactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Essential-genes-reactions">Essential genes reactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CORE.html#Finding-essential-genes-reactions">Finding essential genes reactions</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="CORE.html#Spreadsheet">Spreadsheet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CORE.html#Facade">Facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE.html#2.-FacadeUtils">2. FacadeUtils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Import-FacadeUtils-modules">Import FacadeUtils modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Generate-chokepoint-summary-spreadsheet">Generate chokepoint summary spreadsheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE.html#Generate-chokepoint-growth-sensibility-spreadsheet">Generate chokepoint growth sensibility spreadsheet</a></li>
 </ul>
 </li>
 </ul>
@@ -233,7 +235,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="CORE.html" class="btn btn-neutral float-right" title="Developer documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="CORE.html" class="btn btn-neutral float-right" title="1. findCPcore" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
