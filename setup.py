@@ -23,7 +23,7 @@ setuptools.setup(
         "depinfo",
         "future",
         "mpmath",
-        "numpy>=1.13",
+        "numpy>=1.16.5",
         "optlang>=1.4.2",
         "pandas>=0.17.0",
         "python-dateutil",

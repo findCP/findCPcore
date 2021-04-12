@@ -68,7 +68,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 			If the method find_dem() hasnt been called the value of the attribute is None.
 
 		__chokepoints (): List of objects _MetaboliteReact containing chokepoint reactions of the network.
-			If the methos find_chokepoints() hasn't been called the value is None.
+			If the method find_chokepoints() has not been called the value is None.
 
 		__fva (): List of tuples (cobra.core.reaction, maximun, minimum) containing the result of the Flux Variability Analysis.
 
@@ -94,12 +94,8 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 
 	__exchange_demand_reactions = {}
 
-	# as we consider reactions with flux (0,0) forward (->) save the original topological
-	# direction to avoid a direction swap ((<-) to (->)).
-	__initial_backward_reactions = set({})
-
 	# Number of processes to run FVA / compute essential genes
-        # By default this value will be PROCESSES constant value
+    # By default this value will be PROCESSES constant value
 	__processes = None
 
 	@property
@@ -252,7 +248,9 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		:return: List of cobra.core.reaction with dead-reactions
 		:rtype: list([ cobra.core.reaction ])
 		"""
-		return list(filter(lambda reaction: abs(reaction.upper_bound) < CONST_EPSILON and abs(reaction.lower_bound) < CONST_EPSILON, self.__cobra_model.reactions))
+		return list(filter(lambda reaction: abs(reaction.upper_bound) < CONST_EPSILON \
+											and abs(reaction.lower_bound) < CONST_EPSILON, \
+						   self.__cobra_model.reactions))
 
 	def exchange_demand_reactions(self):
 		return self.__exchange_demand_reactions
@@ -322,8 +320,6 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 			for reaction in self.__cobra_model.reactions:
 				if (len(reaction.reactants) == 0 and len(reaction.products) == 1) or (len(reaction.reactants) == 1 and len(reaction.products) == 0):
 					self.__exchange_demand_reactions.add(reaction)
-				if self.__reaction_direction(reaction) == self._Direction.BACKWARD:
-					self.__initial_backward_reactions.add(reaction)
 
 		except FileNotFoundError:
 			sys.stderr = original_stderr  # turn STDERR back on
@@ -343,7 +339,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 					raise Exception("Error reading model: " + error_list[0])
 			# Unexpected error
 			raise exception
-			
+
 
 		sys.stderr = original_stderr  # turn STDERR back on
 
@@ -379,19 +375,18 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		Returns: Enum: FORWARD/BACKWARD/REVERSIBLE depending on the direction of the reaction.
 
 		"""
-		if reaction.upper_bound > - CONST_EPSILON and reaction.upper_bound < CONST_EPSILON:
+		if - CONST_EPSILON < reaction.upper_bound < CONST_EPSILON:
 			upper = 0
 		else:
 			upper = reaction.upper_bound
-		if reaction.lower_bound > - CONST_EPSILON and reaction.lower_bound < CONST_EPSILON:
+		if - CONST_EPSILON < reaction.lower_bound < CONST_EPSILON:
 			lower = 0
 		else:
 			lower = reaction.lower_bound
+
 		if lower == 0 and upper == 0:
-			if reaction in self.__initial_backward_reactions:
-				return self._Direction.BACKWARD
-			else:
-				return self._Direction.FORWARD
+			# Note that reactions with upper and lower bound equal to 0 are considered FORWARD by default
+			return self._Direction.FORWARD
 		elif lower >= 0:
 			return self._Direction.FORWARD
 		elif upper > 0:
@@ -578,15 +573,15 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		return obj.reaction.id
 
 
-	def find_chokepoints(self, exclude_dead_reactions=False):
+	def find_chokepoints(self, exclude_dead_reactions=True):
 		""" Finds chokepoint reactions of the cobra model
 
 		Returns: List of objects of class _MetaboliteReact containing a chokepoint reaction
 				 and the metabolite consumed/produced
 
 		"""
-		reactants = []	# List of reactants metabolites with it's reaction
-		products = []	# List of products metabolites with it's reaction
+		reactants = []	# List of reactants metabolites with its reaction
+		products = []	# List of products metabolites with its reaction
 		for reaction in self.__cobra_model.reactions:
 			direction = self.__reaction_direction(reaction)
 			is_dead_reaction = self.__is_dead_reaction(reaction)
@@ -622,7 +617,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		chokepoints = []
 
 		# Pair metabolites of ordered lists of reactants and products
-		# 	If a metabolite appears 1 time in one list and more than 1 time on the other -> 
+		# 	If a metabolite appears 1 time in one list and more than 1 time on the other ->
 		#	The reaction on the 1 time side is a chokepoint reaction
 		while i < len(reactants) and j < len(products):
 			mtb1 = reactants[i].metabolite.id
@@ -769,7 +764,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 				if update_flux:
 					# change assignmentes to avoid inconsistent flux
 					# see: https://github.com/opencobra/cobrapy/issues/793
-		
+
 					if reaction.lower_bound > fva_upper:
 						reaction.lower_bound = fva_upper
 					reaction.upper_bound = fva_upper

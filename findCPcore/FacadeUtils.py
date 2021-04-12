@@ -101,8 +101,6 @@ class FacadeUtils:
 
 			nr = set([r.id for r in model.reactions()]).difference(fva_reversible).difference(fva_dead_reactions)
 
-			#nnrr = reversible_initial.difference(fva_reversible).difference(fva_dead_reactions)
-
 			model.find_chokepoints(exclude_dead_reactions=True)
 			chokepoints = set({})
 			for (reaction, metabolite) in model.chokepoints():
