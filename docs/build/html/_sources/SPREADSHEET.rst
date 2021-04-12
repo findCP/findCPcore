@@ -1,4 +1,4 @@
 SPREADSHEET documentation
-====================
+=========================
 
 .. class:: ExecuteTimePreprocessor

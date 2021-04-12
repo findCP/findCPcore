@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. findCPcore &mdash; findCPcore version eb7c87e</title>
+  <title>1. findCPcore &mdash; findCPcore version 513cb54</title>
   
 
   
@@ -764,20 +764,22 @@ gua_e       |  e
 </pre></div>
 </div>
 <p>The reactions that are deleted on the method can be modified by the following params:</p>
-<ul><li><p><strong>delete_exchange</strong> :</p>
-<ul><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>    &lt;li&gt; **True** : all the reactions that are produce or consume 0 metabolites are deleted whether they are exchange/demand or not. &lt;/li&gt;
-    &lt;li&gt; **False** : (default) deleted according to &#39;keep_all_incomplete_reactions&#39; param. &lt;/li&gt;
-&lt;/ul&gt;
-</pre></div>
-</div>
-</li><li><p><strong>keep_all_incomplete_reactions</strong> :</p>
-<ul><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>   &lt;li&gt; **False**: if a reactions is a [cobra boundary reaction](https://cobrapy.readthedocs.io/en/latest/media.html#Boundary-reactions) (calculated by heuristics) that reaction can&#39;t be deleted. &lt;/li&gt;
-   &lt;li&gt; **True**: (default) if a reaction initially doesn&#39;t produce or consume any metabolite that reaction can&#39;t be deleted. &lt;/li&gt;
-&lt;/ul&gt;
-</pre></div>
-</div>
-</li></ul><div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<ul class="simple">
+<li><p><strong>delete_exchange</strong> :</p>
+<ul>
+<li><p><strong>True</strong> : all the reactions that are produce or consume 0 metabolites are deleted whether they are exchange/demand or not</p></li>
+<li><p><strong>False</strong> : (default) deleted according to ‘keep_all_incomplete_reactions’ param.</p></li>
+</ul>
+</li>
+<li><p><strong>keep_all_incomplete_reactions</strong> :</p>
+<ul>
+<li><p><strong>False</strong>: if a reactions is a <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/media.html#Boundary-reactions">cobra boundary reaction</a> (calculated by heuristics) that reaction can’t be deleted.</p></li>
+<li><p><strong>True</strong>: (default) if a reaction initially doesn’t produce or consume any metabolite that reaction can’t be deleted.</p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -786,8 +788,17 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Metabolites:  655
+Reactions:  743
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -795,8 +806,8 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -804,6 +815,15 @@ gua_e       |  e
 
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Metabolites:  486
+Reactions:  739
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -813,14 +833,36 @@ gua_e       |  e
 <div class="section" id="Finding-Dead-reactions">
 <h3>Finding Dead reactions<a class="headerlink" href="#Finding-Dead-reactions" title="Permalink to this headline">¶</a></h3>
 <p>Dead reactions of the model are calculated with the method <code class="docutils literal notranslate"><span class="pre">dead_reactions()</span></code>, which returns a list of <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reactions</a> with dead reactions.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model</span><span class="o">.</span><span class="n">dead_reactions</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&lt;Reaction SA_biomass_1a at 0x7fe40f8359d0&gt;,
+ &lt;Reaction biomass_SA_2a at 0x7fe40f7025d0&gt;,
+ &lt;Reaction biomass_SA_2b at 0x7fe40f702a50&gt;,
+ &lt;Reaction biomass_SA_3a at 0x7fe40f702ed0&gt;,
+ &lt;Reaction biomass_SA_3b at 0x7fe40f702c90&gt;,
+ &lt;Reaction biomass_SA_4a at 0x7fe40f7160d0&gt;,
+ &lt;Reaction biomass_SA_5a at 0x7fe40f716050&gt;,
+ &lt;Reaction biomass_SA_6a at 0x7fe40f716fd0&gt;,
+ &lt;Reaction biomass_SA_6b at 0x7fe40f721fd0&gt;,
+ &lt;Reaction biomass_SA_7a at 0x7fe40f730f90&gt;,
+ &lt;Reaction biomass_SA_7b at 0x7fe40f6bff90&gt;,
+ &lt;Reaction biomass_SA_lipids_only at 0x7fe40f721f90&gt;,
+ &lt;Reaction biomass_SA_nuc_only at 0x7fe40f710c90&gt;,
+ &lt;Reaction biomass_SA_only_AA at 0x7fe40f730fd0&gt;]
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -830,22 +872,50 @@ gua_e       |  e
 <div class="section" id="Finding-chokepoint-reactions">
 <h3>Finding chokepoint reactions<a class="headerlink" href="#Finding-chokepoint-reactions" title="Permalink to this headline">¶</a></h3>
 <p>Chokepoint reactions are calculated with the method <code class="docutils literal notranslate"><span class="pre">find_chokepoints()</span></code>. The method <code class="docutils literal notranslate"><span class="pre">chokepoints()</span></code> returns a list of tuples of types (<a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reactions</a>, <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Metabolites">cobra.core.metabolites</a>) representing a chokepoint reactions object and the metabolite it only produces/consumes.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Read initial model again</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">MetabolicModel</span><span class="p">(</span><span class="n">CobraMetabolicModel</span><span class="p">(</span><span class="s2">&quot;aureus.xml&quot;</span><span class="p">))</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">CobraMetabolicModel</span><span class="p">(</span><span class="s2">&quot;aureus.xml&quot;</span><span class="p">)</span>
 
 <span class="n">model</span><span class="o">.</span><span class="n">find_chokepoints</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">chokepoints</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&lt;Reaction PAPA_SA at 0x7fe40f2e4a10&gt;,
+  &lt;Metabolite 12dgr_SA_c at 0x7fe40fd65590&gt;),
+ (&lt;Reaction PROD2 at 0x7fe40f249cd0&gt;, &lt;Metabolite 1pyr5c_c at 0x7fe40fd65bd0&gt;),
+ (&lt;Reaction DHDPRy at 0x7fe40f4d1d90&gt;,
+  &lt;Metabolite 23dhdp_c at 0x7fe40fdb1310&gt;),
+ (&lt;Reaction DHDPS at 0x7fe40f4d34d0&gt;, &lt;Metabolite 23dhdp_c at 0x7fe40fdb1310&gt;),
+ (&lt;Reaction DHAD1 at 0x7fe40f4ce8d0&gt;, &lt;Metabolite 23dhmb_c at 0x7fe40fde34d0&gt;),
+ (&lt;Reaction KARA1i at 0x7fe40f3ce910&gt;,
+  &lt;Metabolite 23dhmb_c at 0x7fe40fde34d0&gt;),
+ (&lt;Reaction DHAD2 at 0x7fe40f4d1490&gt;, &lt;Metabolite 23dhmp_c at 0x7fe40fde3910&gt;),
+ (&lt;Reaction KARA2i at 0x7fe40f3ceb10&gt;,
+  &lt;Metabolite 23dhmp_c at 0x7fe40fde3910&gt;),
+ (&lt;Reaction DHPPDA at 0x7fe40f4d9950&gt;,
+  &lt;Met
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
+</div>
 <p>Dead reactions can be excluded from the computation of chokepoints with the <code class="docutils literal notranslate"><span class="pre">exclude_dead_reactions=True</span></code> parameter. This is strongly recommended as dead reactions are considered forward reactions by default an this can lead to misinterpretations.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -854,15 +924,64 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&lt;Reaction PAPA_SA at 0x7fe40f2e4a10&gt;,
+  &lt;Metabolite 12dgr_SA_c at 0x7fe40fd65590&gt;),
+ (&lt;Reaction PROD2 at 0x7fe40f249cd0&gt;, &lt;Metabolite 1pyr5c_c at 0x7fe40fd65bd0&gt;),
+ (&lt;Reaction DHDPRy at 0x7fe40f4d1d90&gt;,
+  &lt;Metabolite 23dhdp_c at 0x7fe40fdb1310&gt;),
+ (&lt;Reaction DHDPS at 0x7fe40f4d34d0&gt;, &lt;Metabolite 23dhdp_c at 0x7fe40fdb1310&gt;),
+ (&lt;Reaction DHAD1 at 0x7fe40f4ce8d0&gt;, &lt;Metabolite 23dhmb_c at 0x7fe40fde34d0&gt;),
+ (&lt;Reaction KARA1i at 0x7fe40f3ce910&gt;,
+  &lt;Metabolite 23dhmb_c at 0x7fe40fde34d0&gt;),
+ (&lt;Reaction DHAD2 at 0x7fe40f4d1490&gt;, &lt;Metabolite 23dhmp_c at 0x7fe40fde3910&gt;),
+ (&lt;Reaction KARA2i at 0x7fe40f3ceb10&gt;,
+  &lt;Metabolite 23dhmp_c at 0x7fe40fde3910&gt;),
+ (&lt;Reaction DHPPDA at 0x7fe40f4d9950&gt;,
+  &lt;Met
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
+</div>
 <p>Chokepoint reactions can also be printed on the command line with <code class="docutils literal notranslate"><span class="pre">print_chokepoints</span></code>.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model</span><span class="o">.</span><span class="n">print_chokepoints</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MODEL:  MODEL1507180070  - NUMBER OF CHOKEPOINTS:  448
+METABOLITE ID |  METABOLITE NAME                           | REACTION ID | REACTION NAME
+------------------------------------------------------------
+12dgr_SA_c    |  1,2-Daicylglycerol (Saureus)              |  PAPA_SA    |  Phosphatidate phosphatase
+1pyr5c_c      |  1-Pyrroline-5-carboxylate                 |  PROD2      |  Proline dehydrogenase
+23dhdp_c      |  2,3-Dihydrodipicolinate                   |  DHDPRy     |  dihydrodipicolinate reductase (NADPH)
+23dhdp_c      |  2,3-Dihydrodipicolinate                   |  DHDPS      |  dihydrodipicolinate synthase
+23dhmb_c      |  (R)-2,3-Dihydroxy-3-methylbutanoate       |  DHAD1      |
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
 </div>
 </div>
 </div>
@@ -871,8 +990,8 @@ gua_e       |  e
 <p><a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3108565/">Flux Balance Analysis (FBA)</a> is a mathematical procedure used to calculate the growth rate of a metabolic model considering a objective function to maximize and the reactions flux as constraints.</p>
 <p>The method <code class="docutils literal notranslate"><span class="pre">get_growth()</span></code> calculates the objective value (growth rate) that maximizes the objective function. This method uses <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/autoapi/cobra/core/model/index.html?highlight=slim#cobra.core.model.Model.slim_optimize">cobra.core.model.slim_optimize</a> and was obtained from <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/_modules/cobra/flux_analysis/deletion.html#_get_growth">cobra.flux_analysis.deletion</a>.</p>
 <p>The objective value obtained with FBA can be accesed with <code class="docutils literal notranslate"><span class="pre">objective_value()</span></code>.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -881,9 +1000,18 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.1580502916027849
+</pre></div></div>
+</div>
 <p>The objective function that is maximized during FBA can be accesed by <code class="docutils literal notranslate"><span class="pre">objective()</span></code></p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -891,9 +1019,18 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;1.0*biomass_SA_8a - 1.0*biomass_SA_8a_reverse_4ce77&#39;
+</pre></div></div>
+</div>
 <p>This objective function can be changed by another reaction of the model with <code class="docutils literal notranslate"><span class="pre">set_objective()</span></code>. This method receives the id of the reaction that will be set as the new objective value.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -901,6 +1038,15 @@ gua_e       |  e
 <span class="n">model</span><span class="o">.</span><span class="n">objective</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;1.0*DHAD1 - 1.0*DHAD1_reverse_39dca&#39;
+</pre></div></div>
 </div>
 </div>
 <div class="section" id="Flux-Variability-Analysis">
@@ -917,8 +1063,8 @@ gua_e       |  e
 <div class="line">- <strong>verbose</strong>: (default False) if True prints on the command line the result of FVA while running the analysis.</div>
 </div>
 <p>Method <code class="docutils literal notranslate"><span class="pre">fva()</span></code> returns an error list if there was an error while running FVA or an empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -926,8 +1072,17 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -935,9 +1090,34 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+FLUX VARIABILITY ANALYSIS:  MODEL1507180070
+REACTION:  3-Methyl-2-oxobutanoate:lipoamide oxidoreductase(decarboxylating and acceptor-2-methylpropanoylating)
+    fva ranges:   [ 0.0        ,  0.0        ]
+REACTION:  3-Methyl-2-oxopentanoate:lipoamide oxidoreductase(decarboxylating and acceptor-2-methylpropanoylating)
+    fva ranges:   [ 0.0        ,  0.0        ]
+REACTION:  4-Methyl-2-oxopentanoate:lipoamide oxidoreductase(decarboxylating and acceptor-2-methylpropanoylating)
+    fva ranges:   [ 0.0        ,  0.0        ]
+REACTION:  6-phospho-beta-galactosidase
+    fva ranges:   [ 0.0        ,  0.0        ]
+REACTION:  6-phospho-beta-glucosidase
+    fva ranges:   [ 0.0        ,  0.0        ]
+RE
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
+</div>
 <p>The result obtained with FVA can be accesed with <code class="docutils literal notranslate"><span class="pre">get_fva()</span></code>. This method returns a list of tuples: (<a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a>, [float] maximum flux, [float] minimum flux)</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -945,11 +1125,39 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(&lt;Reaction 3M2OBLOXRD at 0x7fe40fc3d2d0&gt;, 0.0, 0.0),
+ (&lt;Reaction 3M2OPLOXRD at 0x7fe40fc3d790&gt;, 0.0, 0.0),
+ (&lt;Reaction 4M2OPLOXRD at 0x7fe40fc3d390&gt;, 0.0, 0.0),
+ (&lt;Reaction 6PGALSZ at 0x7fe40fca2ed0&gt;, 0.0, 0.0),
+ (&lt;Reaction 6PHBG at 0x7fe40fca2f90&gt;, 0.0, 0.0),
+ (&lt;Reaction ABTAr at 0x7fe40f6df490&gt;, 0.0, 0.0),
+ (&lt;Reaction ACACT1r at 0x7fe40fcb6d50&gt;,
+  0.00032511320071648854,
+  -2065.6249999999704),
+ (&lt;Reaction ACACT2r at 0x7fe40fcb6850&gt;, 0.0, -2065.624999999973),
+ (&lt;Reaction ACACT3r at 0x7fe40fcb6e90&gt;, 0.0, -2065.624999999973),
+ (&lt;Reaction ACACT4r at 0x7fe40fcb6cd0&gt;, 0.0, -2065.624999999973),
+ (&lt;Reaction ACACT5r at 0x7fe40fcb6b90&gt;, 0.0, -2065.624999999973),
+ (&lt;Reaction ACACT6r at 0x7fe40fcb6b
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
+</div>
 <div class="section" id="Updating-reaction's-flux-with-FVA">
 <h3>Updating reaction’s flux with FVA<a class="headerlink" href="#Updating-reaction's-flux-with-FVA" title="Permalink to this headline">¶</a></h3>
 <p><strong>findCritical</strong> adds an extra parameter to this method which is <code class="docutils literal notranslate"><span class="pre">update_flux</span></code>. If <code class="docutils literal notranslate"><span class="pre">True</span></code> the method <code class="docutils literal notranslate"><span class="pre">fva()</span></code> updates the model reaction’s flux with the maximum and minimum flux values obtained with FVA (see the example below).</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -958,8 +1166,31 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MODEL:  MODEL1507180070  - NUMBER OF REACTIONS:  743
+REACTION ID | UPPER BOUND | LOWER BOUND | REACTION
+-------------------------------------------------------
+3M2OBLOXRD  |   999999.0  |  -999999.0  |  3mob_c + h_c + lpam_c &lt;=&gt; 2mpdhl_c + co2_c
+3M2OPLOXRD  |   999999.0  |  -999999.0  |  3mop_c + h_c + lpam_c &lt;=&gt; 2mbdhl_c + co2_c
+4M2OPLOXRD  |   999999.0  |  -999999.0  |  4mop_c + h_c + lpam_c &lt;=&gt; 3mbdhl_c + co2_c
+6PGALSZ     |   999999.0  |  0.0        |  h2o_c + lac6p_c --&gt; dgal6p_c + glc_DASH_D_c
+6PHBG       |   999999.0  |  0.0        |  h2o_c + salc6p_c --&gt; 2hymeph_c + g6p_c
+ABTAr       |   999999.0  |  0.0        |  4abut_c + akg_c --&gt; glu_DASH_L_c + sucsal_c
+ACACT1r     |   999999.0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -968,8 +1199,17 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -977,6 +1217,29 @@ gua_e       |  e
 <span class="n">model</span><span class="o">.</span><span class="n">print_reactions</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MODEL:  MODEL1507180070  - NUMBER OF REACTIONS:  743
+REACTION ID | UPPER BOUND | LOWER BOUND | REACTION
+-------------------------------------------------------
+3M2OBLOXRD  |   0.0       |  0.0        |  3mob_c + h_c + lpam_c --&gt; 2mpdhl_c + co2_c
+3M2OPLOXRD  |   0.0       |  0.0        |  3mop_c + h_c + lpam_c --&gt; 2mbdhl_c + co2_c
+4M2OPLOXRD  |   0.0       |  0.0        |  4mop_c + h_c + lpam_c --&gt; 3mbdhl_c + co2_c
+6PGALSZ     |   0.0       |  0.0        |  h2o_c + lac6p_c --&gt; dgal6p_c + glc_DASH_D_c
+6PHBG       |   0.0       |  0.0        |  h2o_c + salc6p_c --&gt; 2hymeph_c + g6p_c
+ABTAr       |   0.0       |  0.0        |  4abut_c + akg_c --&gt; glu_DASH_L_c + sucsal_c
+ACACT1r     |   -3.26642
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
 </div>
 </div>
 </div>
@@ -986,8 +1249,8 @@ gua_e       |  e
 <div class="section" id="Finding-essential-genes">
 <h3>Finding essential genes<a class="headerlink" href="#Finding-essential-genes" title="Permalink to this headline">¶</a></h3>
 <p>Essential genes are calculated with the method <code class="docutils literal notranslate"><span class="pre">find_essential_genes_1()</span></code>. This method returns an error list if there was an error during the computing or an empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -995,15 +1258,59 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[]
+</pre></div></div>
+</div>
 <p>If essential genes were computed with the method above, they can be accesed with <code class="docutils literal notranslate"><span class="pre">essential_genes()</span></code>. This method return a list of <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Genes">cobra.core.gene</a> with essential genes.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model</span><span class="o">.</span><span class="n">essential_genes</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&lt;Gene SA0183 at 0x7fe40fb95450&gt;,
+ &lt;Gene SA0512 at 0x7fe40fb7a550&gt;,
+ &lt;Gene SA0728 at 0x7fe40fbe8690&gt;,
+ &lt;Gene SA0729 at 0x7fe40fbe8710&gt;,
+ &lt;Gene SA0823 at 0x7fe40fbe0fd0&gt;,
+ &lt;Gene SA0910 at 0x7fe40fbdae10&gt;,
+ &lt;Gene SA0911 at 0x7fe40fbdafd0&gt;,
+ &lt;Gene SA0912 at 0x7fe40fbdab50&gt;,
+ &lt;Gene SA0913 at 0x7fe40fbda050&gt;,
+ &lt;Gene SA0937 at 0x7fe40fbd4e50&gt;,
+ &lt;Gene SA0938 at 0x7fe40fbd4ad0&gt;,
+ &lt;Gene SA0994 at 0x7fe40fbccf50&gt;,
+ &lt;Gene SA0995 at 0x7fe40fbccb10&gt;,
+ &lt;Gene SA0996 at 0x7fe40fbcc650&gt;,
+ &lt;Gene SA1088 at 0x7fe40fbc7f10&gt;,
+ &lt;Gene SA1089 at 0x7fe40fbc79d0&gt;,
+ &lt;Gene SA1244 at 0x7fe40fc30850&gt;,
+ &lt;Gene SA1245 at 0x7fe40fc30a10&gt;,
+ &lt;Gene SA1255 at 0x7fe40fc30510&gt;,
+ &lt;Gene SA1521 at 0x7fe40fc14310&gt;,
+ &lt;Gene SA1585 at 0x7
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
 </div>
 </div>
 </div>
@@ -1013,8 +1320,8 @@ gua_e       |  e
 <div class="section" id="Finding-essential-reactions">
 <h3>Finding essential reactions<a class="headerlink" href="#Finding-essential-reactions" title="Permalink to this headline">¶</a></h3>
 <p>Essential reactions are calculated with the method <code class="docutils literal notranslate"><span class="pre">find_essential_reactions_1()</span></code>. This method returns an error list if there was an error during the computing or an empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1022,15 +1329,50 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[]
+</pre></div></div>
+</div>
 <p>If essential genes were computed with the method above, they can be accesed with <code class="docutils literal notranslate"><span class="pre">essential_reactions()</span></code>. This method return a <code class="docutils literal notranslate"><span class="pre">dict</span></code> with keys <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a> with all the reactions of the model, and values <code class="docutils literal notranslate"><span class="pre">float</span></code> with the result of computing FBA with the reaction knocked-out.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model</span><span class="o">.</span><span class="n">essential_reactions</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&lt;Reaction TECA1S at 0x7fe40f1d7410&gt;: 100.00000000000126,
+ &lt;Reaction HETZK at 0x7fe40f410bd0&gt;: 100.00000000000126,
+ &lt;Reaction YUMPS at 0x7fe40f164990&gt;: 100.00000000000126,
+ &lt;Reaction NO3R1 at 0x7fe40f3179d0&gt;: 100.00000000000126,
+ &lt;Reaction GLYD at 0x7fe40f45ce10&gt;: 100.00000000000126,
+ &lt;Reaction GMHEPPA at 0x7fe40f465e90&gt;: 100.00000000000126,
+ &lt;Reaction THRAr at 0x7fe40f1edad0&gt;: 100.00000000000126,
+ &lt;Reaction ADPRDP at 0x7fe40f525890&gt;: 100.00000000000126,
+ &lt;Reaction SUCBZL at 0x7fe40f1bd950&gt;: 100.00000000000126,
+ &lt;Reaction EX_ser_DASH_L_e at 0x7fe40f493850&gt;: 100.00000000000126,
+ &lt;Reaction biomass_SA_4a at 0x7fe40f164e90&gt;: 100.00000000000126,
+ &lt;Reaction KAS8 at 0x7fe40f3e8e90&gt;: 100.00000000000
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
 </div>
 </div>
 </div>
@@ -1040,8 +1382,8 @@ gua_e       |  e
 <div class="section" id="Finding-essential-genes-reactions">
 <h3>Finding essential genes reactions<a class="headerlink" href="#Finding-essential-genes-reactions" title="Permalink to this headline">¶</a></h3>
 <p>Essential genes reactions are calculated with the method <code class="docutils literal notranslate"><span class="pre">find_essential_genes_reactions()</span></code>. This method returns an error list if there was an error during the computing or an empty list <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1049,15 +1391,51 @@ gua_e       |  e
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[]
+</pre></div></div>
+</div>
 <p>If essential genes reactions were computed with the method above, they can be accesed with <code class="docutils literal notranslate"><span class="pre">essential_genes_reactions()</span></code>. This method returns a <code class="docutils literal notranslate"><span class="pre">dict</span></code> with keys <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a> with all the reactions of the model, and values a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Genes">cobra.core.genes</a> with the essential genes that cause the knock-out of the reaction.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">model</span><span class="o">.</span><span class="n">essential_genes_reactions</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&lt;Reaction CYTBD at 0x7fe40f4c4890&gt;: [&lt;Gene SA0913 at 0x7fe40fbda050&gt;,
+  &lt;Gene SA0938 at 0x7fe40fbd4ad0&gt;,
+  &lt;Gene SA0912 at 0x7fe40fbdab50&gt;,
+  &lt;Gene SA0911 at 0x7fe40fbdafd0&gt;,
+  &lt;Gene SA0910 at 0x7fe40fbdae10&gt;,
+  &lt;Gene SA0937 at 0x7fe40fbd4e50&gt;],
+ &lt;Reaction AKGDb at 0x7fe40f52c3d0&gt;: [&lt;Gene SA1244 at 0x7fe40fc30850&gt;],
+ &lt;Reaction P5CD at 0x7fe40f2e4910&gt;: [&lt;Gene SA2341 at 0x7fe40fc4e9d0&gt;],
+ &lt;Reaction SUCOAS at 0x7fe40f1bde90&gt;: [&lt;Gene SA1089 at 0x7fe40fbc79d0&gt;,
+  &lt;Gene SA1088 at 0x7fe40fbc7f10&gt;],
+ &lt;Reaction PROD2 at 0x7fe40f249cd0&gt;: [&lt;Gene SA1585 at 0x7fe40fc0f9d0&gt;],
+ &lt;Reaction AKGDa at 0x7fe40f52c510&gt;: [&lt;Gene SA1245 at 0x7fe40fc30a10&gt;],
+ &lt;Reaction FUM at 0x7fe40f4a98d0&gt;: [&lt;Gene SA1669 at 0x7fe4
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
 </div>
 </div>
 </div>
@@ -1069,7 +1447,7 @@ gua_e       |  e
 <h2>Import FacadeUtils modules<a class="headerlink" href="#Import-FacadeUtils-modules" title="Permalink to this headline">¶</a></h2>
 <p>Import the module</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1080,14 +1458,41 @@ gua_e       |  e
 </div>
 <div class="section" id="Generate-chokepoint-summary-spreadsheet">
 <h2>Generate chokepoint summary spreadsheet<a class="headerlink" href="#Generate-chokepoint-summary-spreadsheet" title="Permalink to this headline">¶</a></h2>
-<p>The method <code class="docutils literal notranslate"><span class="pre">run_summary_model</span></code> generates a spreadsheet file from a model file with the following data: - List of metabolites of the model. - List of reactions of the model. - List of genes of the model. - Upper and lower flux bound of each reaction obtained with Flux Variability Analysis. - Upper and lower flux bound of each reaction obtained with Flux Variability Analysis grouped by metabolite. - List of reversible reactions of the model before and after Flux Variability Analysis refinement
-(see <a class="reference external" href="####%20Updating%20reaction's%20flux%20with%20FVA">refinement</a>). - List of Dead End Metabolites before and after FVA refinement. - For the following models: - Initial model - Model without DEM - Model refined with FVA. - Model refined with FVA and with DEM removed. - The following set of assests is computed for each and included in one sheet: - List of chokepoint reactions with the metabolite they produce/consume. - List of essential genes of the models. - List of essential reactions of
-the models. - Comparison of chokepoint reactions, essential reactions and essentual gene reactions. - Summary comparing the size of the previous sets and their intersections.</p>
+<div class="line-block">
+<div class="line">The method <code class="docutils literal notranslate"><span class="pre">run_summary_model</span></code> generates a spreadsheet file from a model file with the following data:</div>
+<div class="line">- List of metabolites of the model.</div>
+<div class="line">- List of reactions of the model.</div>
+<div class="line">- List of genes of the model.</div>
+<div class="line">- Upper and lower flux bound of each reaction obtained with Flux Variability Analysis.</div>
+<div class="line">- Upper and lower flux bound of each reaction obtained with Flux Variability Analysis grouped by metabolite.</div>
+<div class="line">- List of reversible reactions of the model before and after Flux Variability Analysis refinement (see <a class="reference external" href="####%20Updating%20reaction's%20flux%20with%20FVA">refinement</a>).</div>
+<div class="line">- List of Dead End Metabolites before and after FVA refinement.</div>
+<div class="line">- For the following models:</div>
+<div class="line">     * Initial model</div>
+<div class="line">     * Model without DEM</div>
+<div class="line">     * Model refined with FVA.</div>
+<div class="line">     * Model refined with FVA and with DEM removed.</div>
+<div class="line">- The following set of assests is computed for each and included in one sheet:</div>
+<div class="line">     * List of chokepoint reactions with the metabolite they produce/consume.</div>
+<div class="line">     * List of essential genes of the models.</div>
+<div class="line">     * List of essential reactions of the models.</div>
+<div class="line">     * Comparison of chokepoint reactions, essential reactions and essentual gene reactions.</div>
+<div class="line">- Summary comparing the size of the previous sets and their intersections.</div>
+</div>
 <p><strong>Method declaration:</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">run_summary_model(self,</span> <span class="pre">model_path,</span> <span class="pre">print_f,</span> <span class="pre">arg1,</span> <span class="pre">arg2,</span> <span class="pre">objective=None,</span> <span class="pre">fraction=1.0)</span></code></p>
-<p><strong>Parameters:</strong> - <code class="docutils literal notranslate"><span class="pre">model_path</span></code>: Path of the SBML metabolic model file. - <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progession. The function must have a declaration like the following: - <code class="docutils literal notranslate"><span class="pre">custom_function_name(message,</span> <span class="pre">arg1,</span> <span class="pre">arg2)</span></code> - <code class="docutils literal notranslate"><span class="pre">arg1</span></code>: First parameter to pass to the function if any. - <code class="docutils literal notranslate"><span class="pre">arg2</span></code>: Second parameter to pass to the function if any. - <code class="docutils literal notranslate"><span class="pre">objective</span></code>: Reactions id to be used as objective function. - <code class="docutils literal notranslate"><span class="pre">fraction</span></code>: Fraction of optmimum to be used with FVA.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="line-block">
+<div class="line"><strong>Parameters:</strong></div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">model_path</span></code>: Path of the SBML metabolic model file.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progession. The function must have a declaration like the following:</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">custom_function_name(message,</span> <span class="pre">arg1,</span> <span class="pre">arg2)</span></code></div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">arg1</span></code>: First parameter to pass to the function if any.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">arg2</span></code>: Second parameter to pass to the function if any.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">objective</span></code>: Reactions id to be used as objective function.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">fraction</span></code>: Fraction of optmimum to be used with FVA.</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1107,15 +1512,55 @@ the models. - Comparison of chokepoint reactions, essential reactions and essent
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+LOG:Reading model...
+LOG:Generating models...
+LOG:Searching Dead End Metabolites (D.E.M.)...
+LOG:Searching chokepoint reactions...
+LOG:Searching essential reactions...
+LOG:Searching essential genes...
+LOG:Searching essential genes reactions...
+LOG:Removing Dead End Metabolites (D.E.M.)...
+LOG:Searching essential reactions...
+LOG:Searching new chokepoint reactions...
+LOG:Searching essential genes...
+LOG:Searching essential genes reactions...
+LOG:Running Flux Variability Analysis...
+LOG:Searching Dead End Metabolites (D.E.M.)...
+LOG:Searching new chokepoint reactions...
+LOG:Searching essential genes...
+LOG:Searching essential genes reactions...
+LOG:Searching essential reactions...
+LOG:Removing
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+* * *</div>
+</div>
 </div>
 <div class="section" id="Generate-chokepoint-growth-sensibility-spreadsheet">
 <h2>Generate chokepoint growth sensibility spreadsheet<a class="headerlink" href="#Generate-chokepoint-growth-sensibility-spreadsheet" title="Permalink to this headline">¶</a></h2>
 <p>The method <code class="docutils literal notranslate"><span class="pre">run_sensibility_analysis</span></code> produces a spreadsheet file from a model file with an analysis of varying rhe values of fraction of optimum with FVA effects on the size of the folloing sets: - Reversible Reactions (RR) - Non-reversible Reactions (NR) - Dead Reactions (DR) - Chokepoint reactions (CP)</p>
 <p><strong>Method declaration</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">run_sensibility_analysis(self,</span> <span class="pre">model_path,</span> <span class="pre">print_f,</span> <span class="pre">arg1,</span> <span class="pre">arg2,</span> <span class="pre">objective=None)</span></code></p>
-<p><strong>Parameters:</strong> - <code class="docutils literal notranslate"><span class="pre">model_path</span></code>: Path of the SBML metabolic model file. - <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progession. The function must have a declaration like the following: - <code class="docutils literal notranslate"><span class="pre">custom_function_name(message,</span> <span class="pre">arg1,</span> <span class="pre">arg2)</span></code> - <code class="docutils literal notranslate"><span class="pre">arg1</span></code>: First parameter to pass to the function if any. - <code class="docutils literal notranslate"><span class="pre">arg2</span></code>: Second parameter to pass to the function if any. - <code class="docutils literal notranslate"><span class="pre">objective</span></code>: Reactions id to be used as objective function.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="line-block">
+<div class="line"><strong>Parameters:</strong></div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">model_path</span></code>: Path of the SBML metabolic model file.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progession. The function must have a declaration like the following:</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">custom_function_name(message,</span> <span class="pre">arg1,</span> <span class="pre">arg2)</span></code></div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">arg1</span></code>: First parameter to pass to the function if any.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">arg2</span></code>: Second parameter to pass to the function if any.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">objective</span></code>: Reactions id to be used as objective function.</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1127,6 +1572,34 @@ the models. - Comparison of chokepoint reactions, essential reactions and essent
 <span class="n">facadeUtils</span><span class="o">.</span><span class="n">save_spreadsheet</span><span class="p">(</span><span class="s2">&quot;output.xls&quot;</span><span class="p">,</span> <span class="n">spreadsheet</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Reading model...
+Running Flux Variability Analysis with fraction: 0.0
+Running Flux Variability Analysis with fraction: 0.1
+Running Flux Variability Analysis with fraction: 0.2
+Running Flux Variability Analysis with fraction: 0.3
+Running Flux Variability Analysis with fraction: 0.4
+Running Flux Variability Analysis with fraction: 0.5
+Running Flux Variability Analysis with fraction: 0.6
+Running Flux Variability Analysis with fraction: 0.7
+Running Flux Variability Analysis with fraction: 0.8
+Running Flux Variability Analysis with fraction: 0.9
+Running Flux Variability Analysis with fraction: 1.0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(True, &#39;output.xls&#39;)
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
@@ -1158,7 +1631,7 @@ the models. - Comparison of chokepoint reactions, essential reactions and essent
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Alex Oarga
+        &copy; Copyright 2021, Alex Oarga
 
     </p>
   </div>

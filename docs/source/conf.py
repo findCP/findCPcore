@@ -55,7 +55,7 @@ master_doc = 'index'
 
 project = 'findCPcore'
 author = 'Alex Oarga'
-copyright = '2020, ' + author
+copyright = '2021, ' + author
 
 linkcheck_ignore = [r'http://localhost:\d+/']
 
