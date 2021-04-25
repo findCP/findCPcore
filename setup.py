@@ -21,7 +21,7 @@ setuptools.setup(
     install_requires=[
         "cobra==0.16.0",
         "depinfo",
-        "dotenv",
+        "python-dotenv",
         "future",
         "mpmath",
         "numpy>=1.16.5",
