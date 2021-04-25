@@ -21,6 +21,7 @@ setuptools.setup(
     install_requires=[
         "cobra==0.16.0",
         "depinfo",
+        "dotenv",
         "future",
         "mpmath",
         "numpy>=1.16.5",
@@ -37,7 +38,7 @@ setuptools.setup(
         "sympy",
         "tabulate",
         "xlwt==1.3.0",
-	"six",
+	"six"
     ],
     python_requires='>=3.5',
 )
