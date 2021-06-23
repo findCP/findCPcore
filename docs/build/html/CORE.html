@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. findCPcore &mdash; findCPcore version 513cb54</title>
+  <title>1. findCPcore &mdash; findCPcore version 6b6b58e</title>
   
 
   
@@ -481,7 +481,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="section" id="Get-model-info">
 <h2>Get model info<a class="headerlink" href="#Get-model-info" title="Permalink to this headline">¶</a></h2>
-<p>The following methods allow to print on the command line data from the model.</p>
+<p>The following methods allow us to print on the command line data from the model.</p>
 <div class="section" id="Model-info">
 <h3>Model info<a class="headerlink" href="#Model-info" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
@@ -712,7 +712,7 @@ mhpglu_c    |  c                |  MHPGLUT
 <div class="output_area rendered_html docutils container">
 * * *</div>
 </div>
-<p>Dead-end metabolites printed can be limited to a specific compartment. Avaible compartments are given by <code class="docutils literal notranslate"><span class="pre">model.compartments()</span></code> method.</p>
+<p>Dead-end metabolites printed can be limited to a specific compartment. Available compartments are given by <code class="docutils literal notranslate"><span class="pre">model.compartments()</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -755,7 +755,7 @@ gua_e       |  e
 <div class="section" id="Removing-dead-end-metabolites">
 <h3>Removing dead-end metabolites<a class="headerlink" href="#Removing-dead-end-metabolites" title="Permalink to this headline">¶</a></h3>
 <p>Method <code class="docutils literal notranslate"><span class="pre">remove_dem()</span></code> removes dead-end metabolites from the model. Once dead-end metabolites are deleted, some reactions might not produce a metabolite anymore so the method deletes also these reactions and loops again until no dead-end metabolite is found:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>while number of metabolites doesnt change:
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>while number of metabolites does not change:
     delete all dead-end metabolites
     for reaction that produced or consumed dead-end metabolites:
         if reaction produces or consumes 0 metabolites [and is not exchange nor demand]:
@@ -773,7 +773,7 @@ gua_e       |  e
 </li>
 <li><p><strong>keep_all_incomplete_reactions</strong> :</p>
 <ul>
-<li><p><strong>False</strong>: if a reactions is a <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/media.html#Boundary-reactions">cobra boundary reaction</a> (calculated by heuristics) that reaction can’t be deleted.</p></li>
+<li><p><strong>False</strong>: if a reaction is a <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/media.html#Boundary-reactions">cobra boundary reaction</a> (calculated by heuristics) that reaction can’t be deleted.</p></li>
 <li><p><strong>True</strong>: (default) if a reaction initially doesn’t produce or consume any metabolite that reaction can’t be deleted.</p></li>
 </ul>
 </li>
@@ -987,9 +987,9 @@ METABOLITE ID |  METABOLITE NAME                           | REACTION ID | REACT
 </div>
 <div class="section" id="Flux-Balance-Analysis">
 <h2>Flux Balance Analysis<a class="headerlink" href="#Flux-Balance-Analysis" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3108565/">Flux Balance Analysis (FBA)</a> is a mathematical procedure used to calculate the growth rate of a metabolic model considering a objective function to maximize and the reactions flux as constraints.</p>
+<p><a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3108565/">Flux Balance Analysis (FBA)</a> is a mathematical procedure used to calculate the growth rate of a metabolic model considering an objective function to maximize and the reactions flux as constraints.</p>
 <p>The method <code class="docutils literal notranslate"><span class="pre">get_growth()</span></code> calculates the objective value (growth rate) that maximizes the objective function. This method uses <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/autoapi/cobra/core/model/index.html?highlight=slim#cobra.core.model.Model.slim_optimize">cobra.core.model.slim_optimize</a> and was obtained from <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/_modules/cobra/flux_analysis/deletion.html#_get_growth">cobra.flux_analysis.deletion</a>.</p>
-<p>The objective value obtained with FBA can be accesed with <code class="docutils literal notranslate"><span class="pre">objective_value()</span></code>.</p>
+<p>The objective value obtained with FBA can be accessed with <code class="docutils literal notranslate"><span class="pre">objective_value()</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
@@ -1009,7 +1009,7 @@ METABOLITE ID |  METABOLITE NAME                           | REACTION ID | REACT
 0.1580502916027849
 </pre></div></div>
 </div>
-<p>The objective function that is maximized during FBA can be accesed by <code class="docutils literal notranslate"><span class="pre">objective()</span></code></p>
+<p>The objective function that is maximized during FBA can be accessed by <code class="docutils literal notranslate"><span class="pre">objective()</span></code></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
@@ -1115,7 +1115,7 @@ RE
 <div class="output_area rendered_html docutils container">
 * * *</div>
 </div>
-<p>The result obtained with FVA can be accesed with <code class="docutils literal notranslate"><span class="pre">get_fva()</span></code>. This method returns a list of tuples: (<a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a>, [float] maximum flux, [float] minimum flux)</p>
+<p>The result obtained with FVA can be accessed with <code class="docutils literal notranslate"><span class="pre">get_fva()</span></code>. This method returns a list of tuples: (<a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a>, [float] maximum flux, [float] minimum flux)</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
@@ -1267,7 +1267,7 @@ ACACT1r     |   -3.26642
 []
 </pre></div></div>
 </div>
-<p>If essential genes were computed with the method above, they can be accesed with <code class="docutils literal notranslate"><span class="pre">essential_genes()</span></code>. This method return a list of <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Genes">cobra.core.gene</a> with essential genes.</p>
+<p>If essential genes were computed with the method above, they can be accessed with <code class="docutils literal notranslate"><span class="pre">essential_genes()</span></code>. This method return a list of <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Genes">cobra.core.gene</a> with essential genes.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
@@ -1338,7 +1338,7 @@ ACACT1r     |   -3.26642
 []
 </pre></div></div>
 </div>
-<p>If essential genes were computed with the method above, they can be accesed with <code class="docutils literal notranslate"><span class="pre">essential_reactions()</span></code>. This method return a <code class="docutils literal notranslate"><span class="pre">dict</span></code> with keys <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a> with all the reactions of the model, and values <code class="docutils literal notranslate"><span class="pre">float</span></code> with the result of computing FBA with the reaction knocked-out.</p>
+<p>If essential genes were computed with the method above, they can be accessed with <code class="docutils literal notranslate"><span class="pre">essential_reactions()</span></code>. This method return a <code class="docutils literal notranslate"><span class="pre">dict</span></code> with keys <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a> with all the reactions of the model, and values <code class="docutils literal notranslate"><span class="pre">float</span></code> with the result of computing FBA with the reaction knocked-out.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
@@ -1400,7 +1400,7 @@ ACACT1r     |   -3.26642
 []
 </pre></div></div>
 </div>
-<p>If essential genes reactions were computed with the method above, they can be accesed with <code class="docutils literal notranslate"><span class="pre">essential_genes_reactions()</span></code>. This method returns a <code class="docutils literal notranslate"><span class="pre">dict</span></code> with keys <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a> with all the reactions of the model, and values a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Genes">cobra.core.genes</a> with the essential genes that cause the knock-out of the reaction.</p>
+<p>If essential genes reactions were computed with the method above, they can be accessed with <code class="docutils literal notranslate"><span class="pre">essential_genes_reactions()</span></code>. This method returns a <code class="docutils literal notranslate"><span class="pre">dict</span></code> with keys <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Reactions">cobra.core.reaction</a> with all the reactions of the model, and values a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <a class="reference external" href="https://cobrapy.readthedocs.io/en/latest/getting_started.html#Genes">cobra.core.genes</a> with the essential genes that cause the knock-out of the reaction.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
@@ -1442,7 +1442,7 @@ ACACT1r     |   -3.26642
 </div>
 <div class="section" id="2.-FacadeUtils">
 <h1>2. FacadeUtils<a class="headerlink" href="#2.-FacadeUtils" title="Permalink to this headline">¶</a></h1>
-<p>The module <code class="docutils literal notranslate"><span class="pre">FacadeUtils</span></code> from <code class="docutils literal notranslate"><span class="pre">findCPcore</span></code> provides specific methods for the generation of spreadsheet regarging the computation of chokepoint reactions taking into account Flux Variability Anañysis and Dead End Metabolites.</p>
+<p>The module <code class="docutils literal notranslate"><span class="pre">FacadeUtils</span></code> from <code class="docutils literal notranslate"><span class="pre">findCPcore</span></code> provides specific methods for the generation of spreadsheets regarding the computation of chokepoint reactions taking into account Flux Variability Analysis and Dead End Metabolites.</p>
 <div class="section" id="Import-FacadeUtils-modules">
 <h2>Import FacadeUtils modules<a class="headerlink" href="#Import-FacadeUtils-modules" title="Permalink to this headline">¶</a></h2>
 <p>Import the module</p>
@@ -1472,11 +1472,11 @@ ACACT1r     |   -3.26642
 <div class="line">     * Model without DEM</div>
 <div class="line">     * Model refined with FVA.</div>
 <div class="line">     * Model refined with FVA and with DEM removed.</div>
-<div class="line">- The following set of assests is computed for each and included in one sheet:</div>
+<div class="line">- The following set of assets is computed for each and included in one sheet:</div>
 <div class="line">     * List of chokepoint reactions with the metabolite they produce/consume.</div>
 <div class="line">     * List of essential genes of the models.</div>
 <div class="line">     * List of essential reactions of the models.</div>
-<div class="line">     * Comparison of chokepoint reactions, essential reactions and essentual gene reactions.</div>
+<div class="line">     * Comparison of chokepoint reactions, essential reactions and essential gene reactions.</div>
 <div class="line">- Summary comparing the size of the previous sets and their intersections.</div>
 </div>
 <p><strong>Method declaration:</strong></p>
@@ -1484,7 +1484,7 @@ ACACT1r     |   -3.26642
 <div class="line-block">
 <div class="line"><strong>Parameters:</strong></div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">model_path</span></code>: Path of the SBML metabolic model file.</div>
-<div class="line">- <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progession. The function must have a declaration like the following:</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progression. The function must have a declaration like the following:</div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">custom_function_name(message,</span> <span class="pre">arg1,</span> <span class="pre">arg2)</span></code></div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">arg1</span></code>: First parameter to pass to the function if any.</div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">arg2</span></code>: Second parameter to pass to the function if any.</div>
