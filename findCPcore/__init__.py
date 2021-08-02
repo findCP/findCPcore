@@ -1,5 +1,4 @@
-from findCPcore.AbstractMetabolicModel import *
-from findCPcore.MetabolicModel import *
+
 from findCPcore.CobraMetabolicModel import *
 from findCPcore.State import *
 from findCPcore.Spreadsheet import *

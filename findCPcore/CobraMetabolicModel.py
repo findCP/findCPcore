@@ -14,12 +14,10 @@ ENV_PRO = "PRO"
 
 if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
 	# imports on development
-	from AbstractMetabolicModel import AbstractMetabolicModel
 	from State import State
 	from State import CobraMetabolicStateBuilder
 else:
 	# imports on release
-	from findCPcore.AbstractMetabolicModel import AbstractMetabolicModel
 	from findCPcore.State import State
 	from findCPcore.State import CobraMetabolicStateBuilder
 
@@ -52,7 +50,7 @@ class NullDevice():
 		pass
 
 
-class CobraMetabolicModel(AbstractMetabolicModel):
+class CobraMetabolicModel:
 	""" Class containing a metabolic network.
 		It implements AbstractMetabolicModel with the cobrapy library
 
@@ -89,6 +87,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 	__essential_genes = None
 	__essential_genes_reactions = None
 	__essential_reactions = None
+	__optimal_growth_essential_reaction = None
 	__states = {}
 
 
@@ -112,7 +111,7 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 	def model(self):
 		return self.__cobra_model
 
-	def set_state(self, key):
+	def save_state(self, key):
 		builder = CobraMetabolicStateBuilder()
 		self.__states[key] = builder.buildState(self)
 
@@ -200,6 +199,22 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		else:
 			raise Exception("Chokepoint reactions hasn't been calculated. Please run 'find_chokepoints()'.")
 
+	def chokepoint_reactions(self):
+		""" Returns a list of reactions [cobra.core.reaction] containing the chokepoint reactions of the model.
+			NOTE: Unlike 'chokepoints()', this method return only the list of reactions, whereas 'chokepoints()'
+					returns the pairs reaction-metabolite
+
+		:return: list of reactions with chokepoint reactions.
+		:rtype: list( cobra.core.reaction )
+		"""
+		if self.__chokepoints is not None:
+			chokepoint_reactions = set()
+			for (reaction, metabolite) in self.chokepoints():
+				chokepoint_reactions.add(reaction.id)
+			return list(chokepoint_reactions)
+		else:
+			raise Exception("Chokepoint reactions hasn't been calculated. Please run 'find_chokepoints()'.")
+
 
 	def get_fva(self):
 		""" Returns the result of running Flux Variability Analysis on the model
@@ -220,19 +235,25 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		if self.__essential_genes is not None:
 			return self.__essential_genes
 		else:
-			raise Exception("Essential genes hasn't been calculated. Please run 'find_essential_genes_1()'.")
+			raise Exception("Essential genes have not been calculated. Please run 'find_essential_genes_1()'.")
 
 	def essential_genes_reactions(self):
 		if self.__essential_genes_reactions is not None:
 			return self.__essential_genes_reactions
 		else:
-			raise Exception("Essential genes reactions hasn't been calculated. Please run 'find_essential_genes_reactions()'.")
+			raise Exception("Essential genes reactions have not been calculated. Please run 'find_essential_genes_reactions()'.")
 
 	def essential_reactions(self):
 		if self.__essential_reactions is not None:
 			return self.__essential_reactions
 		else:
-			raise Exception("Essential reactions hasn't been calculated. Please run 'find_essential_reactions_1()'.")
+			raise Exception("Essential reactions heve not been calculated. Please run 'find_essential_reactions_1()'.")
+
+	def optimal_growth_essential_reactions(self):
+		if self.__optimal_growth_essential_reaction is not None:
+			return self.__optimal_growth_essential_reaction
+		else:
+			raise Exception("Optimal growth essential reactions heve not been calculated. Please run 'find_optimal_growth_essential_reactions()'.")
 
 	def reversible_reactions(self):
 		""" Returns a list of reversible reactions of the model
@@ -833,6 +854,20 @@ class CobraMetabolicModel(AbstractMetabolicModel):
 		except Exception as error:
 			errors.append(str(error))
 			self.__essential_reactions = {}
+		return errors
+
+	def find_optimal_growth_essential_reactions(self):
+		errors = []
+		try:
+			MAX_GROWTH = self.get_growth()
+			MGER = set([])
+			for r, g in self.essential_reactions().items():
+				if isnan(g) or g < CONST_EPSILON or g + CONST_EPSILON < MAX_GROWTH:
+					MGER.add(r)
+			self.__optimal_growth_essential_reaction = MGER
+		except Exception as error:
+			errors.append(str(error))
+			self.__optimal_growth_essential_reaction = {}
 		return errors
 
 
