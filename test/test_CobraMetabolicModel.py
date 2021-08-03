@@ -157,7 +157,7 @@ def test_chokepoints():
                     counter_consumed += 1
 
                 if counter_produced > 1 and counter_consumed > 1:
-                    print(f"{m.id} --- {r_test}")
+                    print(m.id + " --- " + r_test)
  
         assert(counter_consumed <= 1 or counter_produced <= 1)
 
