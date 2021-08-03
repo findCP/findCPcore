@@ -121,8 +121,7 @@ class Facade:
     def get_model_info(self):
         return (self.model_id, self.reactions, self.metabolites, self.genes)
 
-    def generate_spreadsheet(self, stoppable, model_path, print_f, args1=None, args2=None, output_path=None,
-                             objective=None, fraction=1.0):
+    def generate_spreadsheet(self, stoppable, model_path, print_f, args1=None, args2=None, output_path=None, objective=None, fraction=1.0):
         if not stoppable:
             f = FacadeUtils()
             f.processes = self.__processes
@@ -205,8 +204,7 @@ class Facade:
             self.thread1.start()
             self.tid = self.thread1.get_my_tid()
 
-    def run_fva(self, stoppable, output_path, print_f, model_path, args1=None, args2=None, objective=None,
-                fraction=1.0):
+    def run_fva(self, stoppable, output_path, print_f, model_path, args1=None, args2=None, objective=None, fraction=1.0):
         if not stoppable:
             f = FacadeUtils()
             f.processes = self.__processes
