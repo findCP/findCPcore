@@ -2,7 +2,6 @@ import os, sys
 import pytest
 import logging
 import subprocess
-import xlrd
 import math
 from enum import Enum
 
