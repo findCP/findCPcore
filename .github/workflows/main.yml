@@ -57,6 +57,7 @@ jobs:
         python setup.py sdist bdist_wheel
     - name: Twine upload
       env:
+        name: PYPI_ENV
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
