@@ -5,9 +5,9 @@ import subprocess
 import math
 from enum import Enum
 
-sys.path.append("../findCPcore/")
+sys.path.append("../")
 
-from CobraMetabolicModel import CobraMetabolicModel
+from findCPcore.CobraMetabolicModel import CobraMetabolicModel
 from testdata import TESTDATA_PRECOMPUTED_DEM, TESTDATA_PRECOMPUTED_CHOKEPOINTS, TESTDATA_PRECOMPUTED_GROWTH_CP
 
 LOGGER     = logging.getLogger(__name__)
