@@ -1,5 +1,5 @@
 
-__version__ = "0.1.0"
+__version__ = "0.1.0b"
 
 from findCPcore.CobraMetabolicModel import *
 from findCPcore.State import *
