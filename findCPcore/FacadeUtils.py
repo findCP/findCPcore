@@ -16,6 +16,11 @@ except ImportError:
     # Try backported to PY<37 `importlib_resources`.
     import importlib_resources as pkg_resources
 
+if sys.version_info >= (3, 8):
+    from importlib import metadata
+else:
+    import importlib_metadata as metadata
+
 load_dotenv()
 
 ENV_ENVIRONMENT = "ENVIRONMENT"
@@ -37,8 +42,7 @@ else:
     from findCPcore.utils.CustomLogger import CustomLogger
     from findCPcore.util import *
     from findCPcore.templates import html
-    import pkg_resources  # part of setuptools
-    VERSION = pkg_resources.get_distribution("findCPcore").version
+    VERSION = metadata.version('findCPcore')
 
 
 class ErrorGeneratingModel(Exception):
