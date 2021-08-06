@@ -37,8 +37,8 @@ else:
     from findCPcore.utils.CustomLogger import CustomLogger
     from findCPcore.util import *
     from findCPcore.templates import html
-    import findCPcore
-    VERSION = findCPcore.__version__
+    import pkg_resources  # part of setuptools
+    VERSION = pkg_resources.get_distribution("findCPcore").version
 
 
 class ErrorGeneratingModel(Exception):
