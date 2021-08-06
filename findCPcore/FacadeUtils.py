@@ -4,7 +4,6 @@ from collections import defaultdict
 import xlwt
 import os
 import json
-import sys
 
 from jinja2 import Environment, FileSystemLoader, Template
 from datetime import datetime
@@ -16,11 +15,6 @@ try:
 except ImportError:
     # Try backported to PY<37 `importlib_resources`.
     import importlib_resources as pkg_resources
-
-if sys.version_info >= (3, 8):
-    from importlib import metadata
-else:
-    import importlib_metadata as metadata
 
 load_dotenv()
 
@@ -42,8 +36,8 @@ else:
     from findCPcore.Spreadsheet import Spreadsheet
     from findCPcore.utils.CustomLogger import CustomLogger
     from findCPcore.util import *
-    from findCPcore.templates import html
-    VERSION = metadata.version('findCPcore')
+    import findCPcore
+    VERSION=findCPcore.__version__
 
 
 class ErrorGeneratingModel(Exception):
