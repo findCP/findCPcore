@@ -23,6 +23,7 @@ setuptools.setup(
         "depinfo",
         "python-dotenv",
         "future",
+        "Jinja2",
         "mpmath",
         "numpy>=1.16.5",
         "optlang>=1.4.2",

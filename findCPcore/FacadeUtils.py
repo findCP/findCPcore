@@ -28,7 +28,7 @@ if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
     from Spreadsheet import Spreadsheet
     from utils.CustomLogger import CustomLogger
     from util import *
-    from templates import dist
+    from templates import html
     VERSION = '0.0.0'
 else:
     # imports on release
@@ -36,7 +36,7 @@ else:
     from findCPcore.Spreadsheet import Spreadsheet
     from findCPcore.utils.CustomLogger import CustomLogger
     from findCPcore.util import *
-    from findCPcore.templates import dist
+    from findCPcore.templates import html
     import findCPcore
     VERSION = findCPcore.__version__
 
@@ -206,7 +206,7 @@ class FacadeUtils:
         # cobra model not json serializable
         del results_growth_dependent['model']
 
-        html_template = pkg_resources.read_text(dist, 'template.html')
+        html_template = pkg_resources.read_text(html, 'template.html')
 
         '''
         jinja2 is giving error:
