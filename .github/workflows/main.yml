@@ -64,3 +64,13 @@ jobs:
     - name: Test install
       run: |
         pip install findCPcore
+    - name: GitHub release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        body_path: ""
+        draft: false
+        prerelease: false
