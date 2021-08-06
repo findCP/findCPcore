@@ -149,7 +149,7 @@ class Facade:
         if self.spreadsheet is not None and config.output_path_spreadsheet is not None:
             logger.print("Generating spreadsheet report...")
             self.save_spreadsheet(False, config.output_path_spreadsheet, config.print_f)
-            logger.print(f"File saved at: {config.output_path_spreadsheet}")
+            logger.print("File saved at: " + config.output_path_spreadsheet)
 
         # Temporarely disable html generation
         '''
@@ -157,7 +157,7 @@ class Facade:
             logger.print("Generating html report...")
             html = f.generate_growth_dependent_html_report(results)
             write_file(config.output_path_html, html)
-            logger.print(f"File saved at: {config.output_path_html}")
+            logger.print("File saved at: " + config.output_path_html)
         '''
 
     def generate_sensibility_spreadsheet(self, stoppable, model_path, print_f, args1=None, args2=None, output_path=None,

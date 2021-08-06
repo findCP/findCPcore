@@ -23,7 +23,6 @@ setuptools.setup(
         "depinfo",
         "python-dotenv",
         "future",
-        'importlib-metadata >= 1.0 ; python_version < "3.8"',
         "Jinja2",
         "mpmath",
         "numpy>=1.16.5",

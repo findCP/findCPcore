@@ -2,7 +2,6 @@ cobra==0.16.0
 depinfo
 python-dotenv
 future
-importlib-metadata
 Jinja2
 mpmath
 numpy>=1.16.5
