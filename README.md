@@ -1,5 +1,7 @@
 [![PyPI version](https://badge.fury.io/py/findCPcore.svg)](https://badge.fury.io/py/findCPcore) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![CI-CD](https://github.com/findCP/findCPcore/actions/workflows/main.yml/badge.svg)](https://github.com/findCP/findCPcore/actions/workflows/main.yml) [![Documentation Status](https://readthedocs.org/projects/findcpcore/badge/?version=latest)](https://findcpcore.readthedocs.io/en/latest/?badge=latest)		
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/findCP/findCPcore/HEAD?filepath=docs%2Fsource%2FCORE.ipynb)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/findCP/findCPcore/HEAD?filepath=docs%2Fsource%2FCORE.ipynb) [![DOI](https://zenodo.org/badge/254950974.svg)](https://zenodo.org/badge/latestdoi/254950974)
+
+
 
 
 ## findCPcore - find ChokePoint reactions in genome-scale metabolic models
