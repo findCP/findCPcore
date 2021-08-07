@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. findCPcore &mdash; findCPcore version 6b6b58e</title>
+  <title>1. findCPcore &mdash; findCPcore version 0.1.1</title>
   
 
   
@@ -123,10 +123,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#2.-FacadeUtils">2. FacadeUtils</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="#2.-Facade-&amp;-FacadeUtils">2. Facade &amp; FacadeUtils</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Import-FacadeUtils-modules">Import FacadeUtils modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Generate-chokepoint-summary-spreadsheet">Generate chokepoint summary spreadsheet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Generate-chokepoint-growth-sensibility-spreadsheet">Generate chokepoint growth sensibility spreadsheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Generate-chokepoint-growth-sensibility-reports">Generate chokepoint growth sensibility reports</a></li>
 </ul>
 </li>
 </ul>
@@ -1440,18 +1440,19 @@ ACACT1r     |   -3.26642
 </div>
 </div>
 </div>
-<div class="section" id="2.-FacadeUtils">
-<h1>2. FacadeUtils<a class="headerlink" href="#2.-FacadeUtils" title="Permalink to this headline">¶</a></h1>
-<p>The module <code class="docutils literal notranslate"><span class="pre">FacadeUtils</span></code> from <code class="docutils literal notranslate"><span class="pre">findCPcore</span></code> provides specific methods for the generation of spreadsheets regarding the computation of chokepoint reactions taking into account Flux Variability Analysis and Dead End Metabolites.</p>
+<div class="section" id="2.-Facade-&amp;-FacadeUtils">
+<h1>2. Facade &amp; FacadeUtils<a class="headerlink" href="#2.-Facade-&-FacadeUtils" title="Permalink to this headline">¶</a></h1>
+<p>Modules <code class="docutils literal notranslate"><span class="pre">FacadeUtils</span></code> and <code class="docutils literal notranslate"><span class="pre">Facade</span></code> from <code class="docutils literal notranslate"><span class="pre">findCPcore</span></code> provides specific methods for the generation of spreadsheets regarding the computation of critical reactions taking into account Flux Variability Analysis and Dead End Metabolites.</p>
 <div class="section" id="Import-FacadeUtils-modules">
 <h2>Import FacadeUtils modules<a class="headerlink" href="#Import-FacadeUtils-modules" title="Permalink to this headline">¶</a></h2>
 <p>Import the module</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">findCPcore</span> <span class="kn">import</span> <span class="n">FacadeUtils</span>
+<span></span><span class="kn">from</span> <span class="nn">findCPcore</span> <span class="kn">import</span> <span class="n">Facade</span>
+<span class="kn">from</span> <span class="nn">findCPcore</span> <span class="kn">import</span> <span class="n">FacadeUtils</span>
 </pre></div>
 </div>
 </div>
@@ -1492,7 +1493,7 @@ ACACT1r     |   -3.26642
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">fraction</span></code>: Fraction of optmimum to be used with FVA.</div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1507,7 +1508,7 @@ ACACT1r     |   -3.26642
     <span class="nb">print</span><span class="p">(</span><span class="n">arg1</span> <span class="o">+</span> <span class="n">message</span><span class="p">)</span>
 
 <span class="n">facadeUtils</span> <span class="o">=</span> <span class="n">FacadeUtils</span><span class="p">()</span>
-<span class="n">spreadsheet</span> <span class="o">=</span> <span class="n">facadeUtils</span><span class="o">.</span><span class="n">run_summary_model</span><span class="p">(</span><span class="s2">&quot;aureus.xml&quot;</span><span class="p">,</span> <span class="n">callback_print</span><span class="p">,</span> <span class="s2">&quot;LOG:&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">spreadsheet</span> <span class="o">=</span> <span class="n">facadeUtils</span><span class="o">.</span><span class="n">run_summary_model</span><span class="p">(</span><span class="s2">&quot;aureus.xml&quot;</span><span class="p">,</span> <span class="n">callback_print</span><span class="p">,</span> <span class="s2">&quot;LOG:&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
 <span class="n">facadeUtils</span><span class="o">.</span><span class="n">save_spreadsheet</span><span class="p">(</span><span class="s2">&quot;output.xls&quot;</span><span class="p">,</span> <span class="n">spreadsheet</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1535,50 +1536,78 @@ LOG:Searching new chokepoint reactions...
 LOG:Searching essential genes...
 LOG:Searching essential genes reactions...
 LOG:Searching essential reactions...
-LOG:Removing
+LOG:Removing Dead End Metabolites (D.E.M.)...
+LOG:Searching essential reactions...
+LOG:Searching new chokepoint reactions...
+LOG:Searching essential genes...
+LOG:Searching essential genes reactions...
+LOG:Generating spreadsheet...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
 </div>
-<div class="output_area rendered_html docutils container">
-* * *</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(True, &#39;output.xls&#39;)
+</pre></div></div>
 </div>
 </div>
-<div class="section" id="Generate-chokepoint-growth-sensibility-spreadsheet">
-<h2>Generate chokepoint growth sensibility spreadsheet<a class="headerlink" href="#Generate-chokepoint-growth-sensibility-spreadsheet" title="Permalink to this headline">¶</a></h2>
-<p>The method <code class="docutils literal notranslate"><span class="pre">run_sensibility_analysis</span></code> produces a spreadsheet file from a model file with an analysis of varying rhe values of fraction of optimum with FVA effects on the size of the folloing sets: - Reversible Reactions (RR) - Non-reversible Reactions (NR) - Dead Reactions (DR) - Chokepoint reactions (CP)</p>
-<p><strong>Method declaration</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">run_sensibility_analysis(self,</span> <span class="pre">model_path,</span> <span class="pre">print_f,</span> <span class="pre">arg1,</span> <span class="pre">arg2,</span> <span class="pre">objective=None)</span></code></p>
+<div class="section" id="Generate-chokepoint-growth-sensibility-reports">
+<h2>Generate chokepoint growth sensibility reports<a class="headerlink" href="#Generate-chokepoint-growth-sensibility-reports" title="Permalink to this headline">¶</a></h2>
+<p>The method <code class="docutils literal notranslate"><span class="pre">generate_growth_dependent_report</span></code> of <code class="docutils literal notranslate"><span class="pre">Facade</span></code> computes and returns growth dependent chokepoints.</p>
+<p>The output can be saved in a spreadsheet file or html report. The resulting files include an analysis of the effects of varying the values of fraction of optimum with FVA has on the folloing sets: - Reversible Reactions (RR) - Non-reversible Reactions (NR) - Dead Reactions (DR) - Chokepoint reactions (CP)</p>
+<div class="line-block">
+<div class="line"><strong>Methods declaration:</strong></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">generate_growth_dependent_report(self,</span> <span class="pre">config)</span></code></div>
+</div>
 <div class="line-block">
 <div class="line"><strong>Parameters:</strong></div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">config</span></code>: <code class="docutils literal notranslate"><span class="pre">findCPcore.utils.GrowthDependentCPConfig</span></code></div>
+</div>
+<div class="line-block">
+<div class="line"><strong>class</strong> <code class="docutils literal notranslate"><span class="pre">findCPcore.utils.GrowthDependentCPConfig</span></code></div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">model_path</span></code>: Path of the SBML metabolic model file.</div>
-<div class="line">- <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progession. The function must have a declaration like the following:</div>
-<div class="line">- <code class="docutils literal notranslate"><span class="pre">custom_function_name(message,</span> <span class="pre">arg1,</span> <span class="pre">arg2)</span></code></div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">print_f</span></code>: Callback function to inform of the computation progression. The function must have a declaration like the following: <code class="docutils literal notranslate"><span class="pre">custom_function_name(message,</span> <span class="pre">arg1,</span> <span class="pre">arg2)</span></code></div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">arg1</span></code>: First parameter to pass to the function if any.</div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">arg2</span></code>: Second parameter to pass to the function if any.</div>
 <div class="line">- <code class="docutils literal notranslate"><span class="pre">objective</span></code>: Reactions id to be used as objective function.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">fraction</span></code>: Fraction of optmimum to be used with FVA.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">output_path_spreadsheet</span></code>: Output path to save spreadsheet report. If None no file is generated.</div>
+<div class="line">- <code class="docutils literal notranslate"><span class="pre">output_path_html</span></code>: Output path to save html report. If None no file is generated.</div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">callback_print</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+<span></span><span class="c1"># import config class</span>
+<span class="kn">from</span> <span class="nn">findCPcore.utils.GrowthDependentCPConfig</span> <span class="kn">import</span> <span class="n">GrowthDependentCPConfig</span>
+
+
+<span class="k">def</span> <span class="nf">callback_print</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-<span class="n">facadeUtils</span> <span class="o">=</span> <span class="n">FacadeUtils</span><span class="p">()</span>
-<span class="n">spreadsheet</span> <span class="o">=</span> <span class="n">facadeUtils</span><span class="o">.</span><span class="n">run_sensibility_analysis</span><span class="p">(</span><span class="s2">&quot;aureus.xml&quot;</span><span class="p">,</span> <span class="n">callback_print</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="n">facadeUtils</span><span class="o">.</span><span class="n">save_spreadsheet</span><span class="p">(</span><span class="s2">&quot;output.xls&quot;</span><span class="p">,</span> <span class="n">spreadsheet</span><span class="p">)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">GrowthDependentCPConfig</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">print_f</span>                 <span class="o">=</span> <span class="n">callback_print</span>
+<span class="n">config</span><span class="o">.</span><span class="n">model_path</span>              <span class="o">=</span> <span class="s2">&quot;aureus.xml&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">output_path_spreadsheet</span> <span class="o">=</span> <span class="s2">&quot;output.xls&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">output_path_html</span>        <span class="o">=</span> <span class="s2">&quot;report.html&quot;</span>
+
+<span class="n">facade</span> <span class="o">=</span> <span class="n">Facade</span><span class="p">()</span>
+<span class="n">facade</span><span class="o">.</span><span class="n">generate_growth_dependent_report</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Reading model...
+Computing essential reactions...
+Computing optimal growth essential reactions
 Running Flux Variability Analysis with fraction: 0.0
 Running Flux Variability Analysis with fraction: 0.1
 Running Flux Variability Analysis with fraction: 0.2
@@ -1590,15 +1619,8 @@ Running Flux Variability Analysis with fraction: 0.7
 Running Flux Variability Analysis with fraction: 0.8
 Running Flux Variability Analysis with fraction: 0.9
 Running Flux Variability Analysis with fraction: 1.0
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(True, &#39;output.xls&#39;)
+Generating spreadsheet report...
+File saved at: output.xls
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">

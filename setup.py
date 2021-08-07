@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="findCPcore",
-    version="0.1.0b",
+    version="0.1.1",
     author="Alex Oarga",
     author_email="alex718123@gmail.com",
     description="findCP core package",
