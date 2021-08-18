@@ -121,7 +121,31 @@ class Facade:
     def get_model_info(self):
         return (self.model_id, self.reactions, self.metabolites, self.genes)
 
+    def generate_critical_cp_report(self, config):
+        logger = CustomLogger(config.print_f, config.args1, config.args2)
+
+        f = FacadeUtils()
+        f.processes = config.processes
+
+        results = f.compute_critical_points(config.model_path, config.print_f, config.args1, config.args2,
+                                                         config.objective)
+        self.spreadsheet = f.generate_critical_cp_spreadsheet(results)
+        if self.spreadsheet is not None and config.output_path_spreadsheet is not None:
+            logger.print("Generating spreadsheet report...")
+            self.save_spreadsheet(False, config.output_path_spreadsheet, config.print_f)
+            logger.print("File saved at: " + config.output_path_spreadsheet)
+
+        if config.output_path_html is not None:
+            logger.print("Generating html report...")
+            html = f.generate_critical_cp_html_report(results)
+            write_file(config.output_path_html, html)
+            logger.print("File saved at: " + config.output_path_html)
+
     def generate_spreadsheet(self, stoppable, model_path, print_f, args1=None, args2=None, output_path=None, objective=None, fraction=1.0):
+        warnings.warn(
+            "generate_spreadsheet() is deprecated, use generate_critical_cp_report(findCPcore.CriticalCPConfig) instead",
+            DeprecationWarning
+        )
         if not stoppable:
             f = FacadeUtils()
             f.processes = self.__processes
@@ -143,7 +167,6 @@ class Facade:
         f = FacadeUtils()
         f.processes = config.processes
 
-
         results = f.compute_growth_dependent_chokepoints(config.model_path, config.print_f, config.args1, config.args2, config.objective)
         self.spreadsheet = f.generate_growth_dependent_spreadsheet(results)
         if self.spreadsheet is not None and config.output_path_spreadsheet is not None:
@@ -151,14 +174,12 @@ class Facade:
             self.save_spreadsheet(False, config.output_path_spreadsheet, config.print_f)
             logger.print("File saved at: " + config.output_path_spreadsheet)
 
-        # Temporarely disable html generation
-        '''
         if config.output_path_html is not None:
             logger.print("Generating html report...")
             html = f.generate_growth_dependent_html_report(results)
             write_file(config.output_path_html, html)
             logger.print("File saved at: " + config.output_path_html)
-        '''
+
 
     def generate_sensibility_spreadsheet(self, stoppable, model_path, print_f, args1=None, args2=None, output_path=None,
                                          objective=None):

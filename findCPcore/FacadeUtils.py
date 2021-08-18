@@ -26,6 +26,7 @@ if os.environ.get(ENV_ENVIRONMENT) == ENV_DEV:
     # imports on development
     from CobraMetabolicModel import CobraMetabolicModel
     from Spreadsheet import Spreadsheet
+    from State import StateEncoder
     from utils.CustomLogger import CustomLogger
     from util import *
     from templates import html
@@ -34,6 +35,7 @@ else:
     # imports on release
     from findCPcore.CobraMetabolicModel import CobraMetabolicModel
     from findCPcore.Spreadsheet import Spreadsheet
+    from findCPcore.State import StateEncoder
     from findCPcore.utils.CustomLogger import CustomLogger
     from findCPcore.util import *
     import findCPcore
@@ -105,6 +107,18 @@ class FacadeUtils:
         return xlwt_worbook
 
 
+    def __generate_model_info_dict(self, model):
+        # Save metadata
+        results = {}
+        results['solver'] = str(type(model.model().solver))
+        results['findCPcore_version'] = VERSION
+        results['date'] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        # save model data
+        results['model_identifier'] = model.id()
+        results['growth'] = model.get_growth()
+        results['objective'] = model.objective()
+        return results
+
     def compute_growth_dependent_chokepoints(self, model_path, print_f, arg1, arg2, objective=None):
 
         FRAC = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
@@ -115,7 +129,7 @@ class FacadeUtils:
         model = read_model(model_path, objective=objective, processes=self.__processes)
 
         logger.print("Computing essential reactions...")
-        model.find_essential_reactions_1()
+        model.knockout_reactions_growth()
         logger.print("Computing optimal growth essential reactions")
         model.find_optimal_growth_essential_reactions()
 
@@ -129,20 +143,13 @@ class FacadeUtils:
         model.find_chokepoints(exclude_dead_reactions=True)
         chokepoints_initial = set(model.chokepoint_reactions())
 
-        # Save metadata
-        results_growth_dependent['solver'] = str(type(model.model().solver))
-        results_growth_dependent['findCPcore_version'] = VERSION
-        results_growth_dependent['date'] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         # save model data
         results_growth_dependent['model'] = model
-        results_growth_dependent['model_identifier'] = model.id()
         results_growth_dependent['reactions'] = [r.id for r in model.reactions()]
         results_growth_dependent['metabolites'] = [m.id for m in model.metabolites()]
         results_growth_dependent['genes'] = [g.id for g in model.genes()]
         results_growth_dependent['compartments'] = list(model.compartments())
-        results_growth_dependent['growth'] = model.get_growth()
-        results_growth_dependent['objective'] = model.objective()
-        results_growth_dependent['essential'] = [r.id for r in model.essential_reactions()]
+        results_growth_dependent['essential'] = [r.id for r in model.knockout_growth()]
         results_growth_dependent['optimal_essential'] = [r.id for r in model.optimal_growth_essential_reactions()]
         # growth dependent values
         results_growth_dependent['index'].append('Initial')
@@ -150,6 +157,8 @@ class FacadeUtils:
         results_growth_dependent['dead'].append(list(dead_reactions_initial))
         results_growth_dependent['non_reversible'].append(list(non_reversible_initial))
         results_growth_dependent['chokepoints'].append(list(chokepoints_initial))
+        # generate generic model data
+        results_growth_dependent = {**results_growth_dependent, **self.__generate_model_info_dict(model)}
 
         y = 1
         for i in range(0, len(FRAC)):
@@ -198,48 +207,18 @@ class FacadeUtils:
         return sObject
 
     def generate_growth_dependent_html_report(self, results_growth_dependent):
-        #file_loader = FileSystemLoader(searchpath="./")
-        #env = Environment(loader=file_loader)
-        #template = env.get_template('template.html')
-
         # cobra model not json serializable
         del results_growth_dependent['model']
+        return generate_html_template(results_growth_dependent, 'template.html')
 
-        html_template = pkg_resources.read_text(html, 'template.html')
-
-        '''
-        jinja2 is giving error:
-            jinja2.exceptions.TemplateSyntaxError: unexpected char '\\' at 280624
-        on angular produced template in the script section
-        The following shortcut is implemented as solution.
-        '''
-        START_SCRIPT_HTML = '<script'
-        END_SCRIPT_HTML = '</script>'
-        script_sections = []
-        for i in range(0, 3):
-            script_start = html_template.find(START_SCRIPT_HTML)
-            script_end = html_template.find(END_SCRIPT_HTML)
-            script_section = html_template[script_start:script_end + len(END_SCRIPT_HTML)]
-            script_sections.append(script_section)
-            no_script_template = html_template[:script_start] \
-                                 + "{{ script_" + str(i) + " }}" \
-                                 + html_template[script_end + len(END_SCRIPT_HTML):]
-            html_template = no_script_template
-
-        # include vars placeholder
-        script_start = no_script_template.find('{{ script_0 }}')
-        no_script_template = no_script_template[:script_start] \
-                             + "<script>window.data = {{ results }};</script>" \
-                             + no_script_template[script_start:]
-
-        template = Template(no_script_template)
-        output = template.render(
-            results=json.dumps(results_growth_dependent),
-            script_0=script_sections[0],
-            script_1=script_sections[1],
-            script_2=script_sections[2])
-
-        return output
+    def generate_critical_cp_html_report(self, critical_cp_results):
+        data = {}
+        encoder = StateEncoder()
+        data["initial"] = encoder.encode(critical_cp_results["initial"])
+        data["fva"] = encoder.encode(critical_cp_results["fva"])
+        data["dem"] = encoder.encode(critical_cp_results["dem"])
+        data["fva_dem"] = encoder.encode(critical_cp_results["fva_dem"])
+        return generate_html_template(critical_cp_results, 'template_cp.html', default=encoder.default)
 
     def run_sensibility_analysis(self, model_path, print_f, arg1, arg2, objective=None):
         warnings.warn(
@@ -257,11 +236,9 @@ class FacadeUtils:
 
         return sObject
 
-    def run_summary_model(
-        self, model_path, print_f, arg1, arg2, objective=None, fraction=1.0
+    def compute_critical_points(
+            self, model_path, print_f, arg1, arg2, objective=None, fraction=1.0
     ):
-        # verboseprint = print if verbose else lambda *a, **k: None
-
         print_f("Reading model...", arg1, arg2)
         model = CobraMetabolicModel(model_path)
         if objective is not None:
@@ -274,6 +251,9 @@ class FacadeUtils:
         model.save_state("fva")
         model.save_state("fva_dem")
 
+        # save general model info
+        general_info = self.__generate_model_info_dict(model)
+
         print_f("Generating models...", arg1, arg2)
 
         model.find_essential_genes_reactions()
@@ -282,7 +262,7 @@ class FacadeUtils:
         print_f("Searching chokepoint reactions...", arg1, arg2)
         model.find_chokepoints(exclude_dead_reactions=True)
         print_f("Searching essential reactions...", arg1, arg2)
-        model.find_essential_reactions_1()
+        model.knockout_reactions_growth()
         print_f("Searching essential genes...", arg1, arg2)
         errors_initial = model.find_essential_genes_1()
         if errors_initial != []:
@@ -297,7 +277,7 @@ class FacadeUtils:
         print_f("Removing Dead End Metabolites (D.E.M.)...", arg1, arg2)
         model.remove_dem()
         print_f("Searching essential reactions...", arg1, arg2)
-        model.find_essential_reactions_1()
+        model.knockout_reactions_growth()
         print_f("Searching new chokepoint reactions...", arg1, arg2)
         model.find_chokepoints(exclude_dead_reactions=True)
 
@@ -337,14 +317,14 @@ class FacadeUtils:
                 print_f("Searching essential genes reactions...", arg1, arg2)
                 model.find_essential_genes_reactions()
             print_f("Searching essential reactions...", arg1, arg2)
-            model.find_essential_reactions_1()
+            model.knockout_reactions_growth()
 
             model.save_state("fva")
 
             print_f("Removing Dead End Metabolites (D.E.M.)...", arg1, arg2)
             model.remove_dem()
             print_f("Searching essential reactions...", arg1, arg2)
-            model.find_essential_reactions_1()
+            model.knockout_reactions_growth()
             print_f("Searching new chokepoint reactions...", arg1, arg2)
             model.find_chokepoints(exclude_dead_reactions=True)
             if errors_fva_genes == []:
@@ -355,35 +335,50 @@ class FacadeUtils:
 
             model.save_state("fva_dem")
 
-        print_f("Generating spreadsheet...", arg1, arg2)
+        result = {}
+        result["initial"] = model.get_state("initial")
+        result["dem"]     = model.get_state("dem")
+        result["fva"]     = model.get_state("fva")
+        result["fva_dem"] = model.get_state("fva_dem")
+        # include general model info computed previously
+        result = {**result, **general_info}
+
+        return result
+
+    def generate_critical_cp_spreadsheet(self, critical_cp_results):
+
+        initial = critical_cp_results["initial"]
+        fva     = critical_cp_results["fva"]
+        dem     = critical_cp_results["dem"]
+        fva_dem = critical_cp_results["fva_dem"]
 
         s = Spreadsheet()
-        s.spreadsheet_write_model_info(model.get_state("initial"), "model_info")
+        s.spreadsheet_write_model_info(initial, "model_info")
         s.spreadsheet_write_summary(
             "summary",
-            model.get_state("initial"),
-            model.get_state("dem"),
-            model.get_state("fva"),
-            model.get_state("fva_dem"),
+            initial,
+            dem,
+            fva,
+            fva_dem,
         )
         s.spreadsheet_write_reactions(
-            model.get_state("initial"), "reactions", ordered=True
+            initial, "reactions", ordered=True
         )
         s.spreadsheet_write_metabolites(
-            model.get_state("initial"),
+            initial,
             "metabolites",
             ordered=True,
             print_reactions=True,
         )
         s.spreadsheet_write_genes(
-            model.get_state("initial"), "genes", ordered=True, print_reactions=True
+            initial, "genes", ordered=True, print_reactions=True
         )
 
         s.spreadsheet_write_reactions(
-            model.get_state("fva"), "reactions_FVA", ordered=True
+            fva, "reactions_FVA", ordered=True
         )
         s.spreadsheet_write_metabolites(
-            model.get_state("fva"),
+            fva,
             "metabolites_FVA",
             ordered=True,
             print_reactions=True,
@@ -391,45 +386,60 @@ class FacadeUtils:
 
         s.spreadsheet_write_reversible_reactions(
             "reversible reactions",
-            model.get_state("initial"),
-            model.get_state("fva"),
+            initial,
+            fva,
             ordered=True,
         )
         s.spreadsheet_write_summary_reactions(
             "chokepoints",
-            model.get_state("initial"),
-            model.get_state("dem"),
-            model.get_state("fva"),
-            model.get_state("fva_dem"),
+            initial,
+            dem,
+            fva,
+            fva_dem,
         )
         s.spreadsheet_write_summary_metabolites(
-            "dead-end", model.get_state("initial"), model.get_state("fva")
+            "dead-end", initial, fva
         )
         s.spreadsheet_write_chokepoints_genes(
             "comparison",
-            model.get_state("initial"),
-            model.get_state("dem"),
-            model.get_state("fva"),
-            model.get_state("fva_dem"),
+            initial,
+            dem,
+            fva,
+            fva_dem,
         )
         s.spreadsheet_write_essential_genes_comparison(
             "essential genes",
-            model.get_state("initial"),
-            model.get_state("dem"),
-            model.get_state("fva"),
-            model.get_state("fva_dem"),
+            initial,
+            dem,
+            fva,
+            fva_dem,
             ordered=True,
         )
         s.spreadsheet_write_essential_reactions(
             "essential reactions",
-            model.get_state("initial"),
-            model.get_state("dem"),
-            model.get_state("fva"),
-            model.get_state("fva_dem"),
+            initial,
+            dem,
+            fva,
+            fva_dem,
             ordered=True,
         )
 
         return s
+
+
+    def run_summary_model(
+        self, model_path, print_f, arg1, arg2, objective=None, fraction=1.0
+    ):
+        warnings.warn(
+            "run_summary_model() is deprecated, use instead:\n"
+            + "    results = facadeUtils.compute_critical_points(...) \n"
+            + "    xlwt_workbook = facadeUtils.generate_critical_cp_spreadsheet(result)",
+            DeprecationWarning
+        )
+
+        results = self.compute_critical_points(model_path, print_f, arg1, arg2, objective, fraction)
+        return self.generate_critical_cp_spreadsheet(results)
+
 
     def find_and_remove_dem(self, model_path):
         model = CobraMetabolicModel(model_path)

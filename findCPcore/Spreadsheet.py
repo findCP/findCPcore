@@ -457,20 +457,20 @@ class Spreadsheet:
             self.spreadsheet_init()
 
         reactions_initial = {}
-        if state_initial.essential_reactions() is not None:
-            for reaction, growth in state_initial.essential_reactions().items():
+        if state_initial.knockout_growth() is not None:
+            for reaction, growth in state_initial.knockout_growth().items():
                 reactions_initial[reaction.id] = growth
         reactions_dem = {}
-        if state_dem.essential_reactions() is not None:
-            for reaction, growth in state_dem.essential_reactions().items():
+        if state_dem.knockout_growth() is not None:
+            for reaction, growth in state_dem.knockout_growth().items():
                 reactions_dem[reaction.id] = growth
         reactions_fva = {}
-        if state_fva.essential_reactions() is not None:
-            for reaction, growth in state_fva.essential_reactions().items():
+        if state_fva.knockout_growth() is not None:
+            for reaction, growth in state_fva.knockout_growth().items():
                 reactions_fva[reaction.id] = growth
         reactions_fva_dem = {}
-        if state_fva_dem.essential_reactions() is not None:
-            for reaction, growth in state_fva_dem.essential_reactions().items():
+        if state_fva_dem.knockout_growth() is not None:
+            for reaction, growth in state_fva_dem.knockout_growth().items():
                 reactions_fva_dem[reaction.id] = growth
 
         style = xlwt.XFStyle()
@@ -490,7 +490,7 @@ class Spreadsheet:
         reactions_fva_dem_key = reactions_fva_dem.keys()
         if ordered:
             reactions = sorted(
-                state_initial.essential_reactions().keys(), key=self.__id
+                state_initial.knockout_growth().keys(), key=self.__id
             )
         row = 1
         for reaction in reactions:
@@ -729,12 +729,12 @@ class Spreadsheet:
                         genes_reactions_dict[reaction].append(gen)
                     else:
                         genes_reactions_dict[reaction] = [gen]
-        essential_reactions = {}
-        if state.essential_reactions() is not None:
-            for reaction, growth in state.essential_reactions().items():
-                essential_reactions[reaction.id] = growth
+        knockout_growth = {}
+        if state.knockout_growth() is not None:
+            for reaction, growth in state.knockout_growth().items():
+                knockout_growth[reaction.id] = growth
 
-        return (chokepoints_dict, genes_reactions_dict, essential_reactions)
+        return (chokepoints_dict, genes_reactions_dict, knockout_growth)
 
     def spreadsheet_write_chokepoints_genes(
         self, sheet_name, state_initial, state_dem, state_fva, state_fva_dem
@@ -784,7 +784,7 @@ class Spreadsheet:
             (
                 chokepoints,
                 genes_reactions,
-                essential_reactions,
+                knockout_growth,
             ) = self.__aux_spreadsheet_write_chokepoints_genes(model)
             for reaction_obj in reactions:
                 reaction = reaction_obj.id
@@ -795,8 +795,8 @@ class Spreadsheet:
                     sheet.write(i, j, "TRUE")
                 if reaction in genes_reactions.keys():
                     sheet.write(i, j + 1, "TRUE")
-                if reaction in essential_reactions.keys():
-                    sheet.write(i, j + 2, essential_reactions[reaction])
+                if reaction in knockout_growth.keys():
+                    sheet.write(i, j + 2, knockout_growth[reaction])
                 i = i + 1
             j = j + 4
 
@@ -825,10 +825,10 @@ class Spreadsheet:
                         genes_reactions_dict[reaction].append(gen)
                     else:
                         genes_reactions_dict[reaction] = [gen]
-        essential_reactions = {}
-        if state.essential_reactions() is not None:
-            for reaction, growth in state.essential_reactions().items():
-                essential_reactions[reaction.id] = growth
+        knockout_growth = {}
+        if state.knockout_growth() is not None:
+            for reaction, growth in state.knockout_growth().items():
+                knockout_growth[reaction.id] = growth
 
         essential_genes = []
         if state.essential_genes() is not None:
@@ -842,7 +842,7 @@ class Spreadsheet:
                 objective_value_005 = state.objective_value() * 0.05
             else:
                 objective_value_005 = 0
-            for reaction, value in essential_reactions.items():
+            for reaction, value in knockout_growth.items():
                 if not isnan(objective_value):
                     if isnan(value) or value == 0:
                         er_g0.append(reaction)
@@ -862,7 +862,7 @@ class Spreadsheet:
             list(chokepoints_dict.keys()),
             essential_genes,
             genes_reactions_dict,
-            essential_reactions,
+            knockout_growth,
             er_g0,
             er_g005,
             reversibles,
